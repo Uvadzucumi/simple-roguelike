@@ -10,12 +10,12 @@ void CRollParticlesMask::Generate(int particle_count, int particle_life){
 
             std::vector <Coords2i> direction;
             for(int i=0; i<particle_count; i++){
-                int part_life=50;
+                int part_life=particle_life;
                 int x=rand()%m_width;
                 int y=rand()%m_height;
                 while(part_life > 0 &&
-                        x > 0 && x < (m_width-2) &&
-                        y > 0 && y < (m_height-2)){
+                        x > 0 && x < (m_width-1) &&
+                        y > 0 && y < (m_height-1)){
                     part_life--;
                     int index=m_width*y+x;
                     // get current height

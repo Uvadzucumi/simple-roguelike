@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 float CMask::getMaxHeight(){
-    float max_height=0;
+    float max_height=m_mask[0];
     int cells_count=m_width*m_height;
     for(int i=0; i < cells_count; i++){
         if(m_mask[i] > max_height){
@@ -13,6 +13,17 @@ float CMask::getMaxHeight(){
         }
     }
     return max_height;
+}
+
+float CMask::getMinHeight(){
+    float min_height=m_mask[0];
+    int cells_count=m_width*m_height;
+    for(int i=0; i < cells_count; i++){
+        if(m_mask[i] < min_height){
+            min_height = m_mask[i];
+        }
+    }
+    return min_height;
 }
 
 void CMask::Free(){

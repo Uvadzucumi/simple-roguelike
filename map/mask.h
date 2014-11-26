@@ -21,8 +21,9 @@ class CMask{
         void Clear();
         void SetSize(int width, int height);
 
-        //void Generate(int particle_count, int particle_life);
         float getMaxHeight();
+        float getMinHeight();
+
         void Normalize();
         float getHeight(int x, int y);
 

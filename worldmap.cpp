@@ -13,8 +13,8 @@ void CWorldMap::Generate(){
     float *height_map=new float[m_width*m_height];
 
     CRollParticlesMask *rp=new CRollParticlesMask(m_width,m_height);
-    rp->Generate(2000,40);
-    cout << "max height: " << rp->getMaxHeight() << endl;
+    rp->Generate(2500,40);
+    cout << "max height: " << rp->getMaxHeight() << " min height: " << rp->getMinHeight() << endl;
     rp->Normalize();
     cout << "max height after normalize: " << rp->getMaxHeight() << endl;
     rp->Dump();
@@ -22,7 +22,7 @@ void CWorldMap::Generate(){
     cout << "Generate Height Map" << endl;
     CNoiseMask *noise=new CNoiseMask(m_width, m_height);
     noise->Generate();
-    cout << "max height: " << noise->getMaxHeight();
+    cout << "max height: " << noise->getMaxHeight() << " min height: " << noise->getMinHeight() << endl;
     noise->Normalize();
     cout << "max height after normalize: " << noise->getMaxHeight() << endl;
     noise->Dump();
@@ -47,14 +47,13 @@ void CWorldMap::Generate(){
     for(int y=0; y < m_height; y++){
         for(int x=0; x < m_width; x++){
             int index=y*m_width+x;
-            int h=255/max_height*height_map[index];
-            cout << "255 / " << max_height << " * " << height_map[index] << " = " << h << "(index = " << index << ")" << endl;
+            int h=255*height_map[index]/max_height;
+            m_map[index]=this->getBiomeByHeight(h); // set biome
+            //cout << "255 * " << height_map[index] << " / " << max_height << " = " << h << " map[" << index << "]=" << m_map[index] << endl;
             height_map[index]=h;
             if(max_height2<h){
                 max_height2=h;
             }
-            // set map biome
-            m_map[index]=this->getBiomeByHeight(h);
         }
     }
     cout << "max height after normalize 255: " << max_height2 << endl;
@@ -63,6 +62,7 @@ void CWorldMap::Generate(){
     delete rp;
     delete noise;
 }
+
 
 WM_Biome CWorldMap::getBiomeByHeight(int height, int water_line_height){
     WM_Biome ret;
@@ -81,6 +81,7 @@ WM_Biome CWorldMap::getBiomeByHeight(int height, int water_line_height){
     }else {
         ret=WMB_Mountain;
     }
+    return ret;
     //cout << "height: " << height << " ret=" << ret << ", ";
 }
 
@@ -93,18 +94,20 @@ void CWorldMap::Dump(){
                     c='~';
                     break;
                 case WMB_ShallowWater:
-                    c=',';
+                    c='~';
                     break;
                 case WMB_Beach:
                     c='.';
                     break;
                 case WMB_Plains:
-                    c=':';
+                    c='.';
                     break;
                 case WMB_Forest:
                     c='*';
+                    break;
                 case WMB_Hills:
-                    c='$';
+                    c='o';
+                    break;
                 case WMB_Mountain:
                     c='^';
                     break;
