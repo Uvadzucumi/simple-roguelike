@@ -3,20 +3,12 @@
 
 #include <stdlib.h>
 
-enum WM_Biome{
-    WMB_DeepWater,      // blue ~
-    WMB_ShallowWater,   // white-blue ~
-    WMB_Beach,          // ellow .
-    WMB_Plains,         // green .
-    WMB_Forest,         // green *
-    WMB_Hills,          // brown ~
-    WMB_Mountain        // silver ^
-};
+#include "game_types.h"
 
 class CWorldMap{
         int m_width;
         int m_height;
-        WM_Biome *m_map;
+        WorldMapBiome *m_map;
 
     public:
         CWorldMap(int width, int height){
@@ -28,14 +20,28 @@ class CWorldMap{
             if(m_map!=NULL){
                 delete[] m_map;
             }
-            m_map = new WM_Biome[width*height];
+            m_map = new WorldMapBiome[width*height];
             m_width=width;
             m_height=height;
         }
 
-        WM_Biome getBiomeByHeight(int height, int water_line_height=100);
+        EGameTile getTileId(int x, int y);
+
+        int getWidth(){ return m_width; }
+        int getHeight(){ return m_height; }
+
+
+
+        WM_Biome getBiomeByHeight(int height, int water_line_height=120);
         void Generate();
         void Dump();
+
+        void setMapBiome(int data_value, WM_Biome new_biome);
+        void setMapTmpData(int value); // set value to all world map field
+        int CheckIslandWave(int start_x, int start_y, int marker);
+
+        void Render();
+
 
 };
 

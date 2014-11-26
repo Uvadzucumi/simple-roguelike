@@ -1,8 +1,8 @@
 
 #include "noise_mask.h"
 
-#define NOISE_OCTAVES 4
-#define NOISE_FREQUENCY 4
+#define NOISE_OCTAVES 2
+#define NOISE_FREQUENCY 1.5
 #define NOISE_AMPLITUDE 2
 
 #include "perlin.h"

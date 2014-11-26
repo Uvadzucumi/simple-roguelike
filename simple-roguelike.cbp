@@ -32,6 +32,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Linker>
+			<Add library="BearLibTerminal" />
+		</Linker>
+		<Unit filename="game.cpp" />
+		<Unit filename="game.h" />
+		<Unit filename="game_types.h" />
 		<Unit filename="items.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="map/mask.cpp" />
@@ -42,7 +48,8 @@
 		<Unit filename="map/perlin.h" />
 		<Unit filename="map/rolling_particles_mask.cpp" />
 		<Unit filename="map/rolling_particles_mask.h" />
-		<Unit filename="types.h" />
+		<Unit filename="render.cpp" />
+		<Unit filename="render.h" />
 		<Unit filename="worldmap.cpp" />
 		<Unit filename="worldmap.h" />
 		<Extensions>

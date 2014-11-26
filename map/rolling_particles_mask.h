@@ -1,7 +1,7 @@
 #ifndef ROLLING_PARTICLES_MASK_H_INCLUDED
 #define ROLLING_PARTICLES_MASK_H_INCLUDED
 
-#include "../types.h"
+#include "../game_types.h"
 
 #include <vector>
 #include <iostream>

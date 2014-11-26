@@ -1,21 +1,17 @@
 #include <iostream>
 
+#define GAME_TITLE "Simple Roguelike Game by Fantik (c) 2014"
+
 #include "items.h"
-#include "map/noise_mask.h"
-#include "map/rolling_particles_mask.h"
-#include "worldmap.h"
+#include "game.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "Simple Roguelike Game by Fantik (c) 2014" << endl;
+    cout << GAME_TITLE << endl;
 
-    CWorldMap *wm=new CWorldMap(80,25);
-    wm->Generate();
-    wm->Dump();
+    CRLGame *game=new CRLGame();
+    return game->Run();
 
-    delete wm;
-
-    return 0;
 }

@@ -1,7 +1,7 @@
 #ifndef MASK_H_INCLUDED
 #define MASK_H_INCLUDED
 
-#include "../types.h"
+#include "../game_types.h"
 #include <vector>
 
 class CMask{

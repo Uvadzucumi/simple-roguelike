@@ -34,7 +34,7 @@ void CMask::Free(){
 }
 
 void CMask::Clear(){
-    for(unsigned int i=0; i<m_width*m_height; i++){
+    for(int i=0; i<m_width*m_height; i++){
         m_mask[i]=0;
     }
 }
@@ -72,7 +72,7 @@ float CMask::getHeight(int x, int y){
 void CMask::Normalize(){
     float max_height=this->getMaxHeight();
     if(max_height){
-        for(unsigned int i=0; i<m_width*m_height; i++){
+        for(int i=0; i < m_width * m_height; i++){
             m_mask[i]/=max_height;
         }
     }
