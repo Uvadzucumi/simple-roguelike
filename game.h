@@ -56,7 +56,7 @@ class CRLGame{
         }
 
         bool initGame(){
-            // create worldmap
+            // create world map
             m_world_map=new CWorldMap(80,25);
             m_world_map->Generate();
             return true;
@@ -68,6 +68,10 @@ class CRLGame{
             }else{
                 return false;
             }
+        }
+
+        std::string getLastError(){
+            return this->error_str;
         }
 
         int Run(){
