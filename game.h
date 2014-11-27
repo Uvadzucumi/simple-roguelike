@@ -6,6 +6,7 @@
 #include "game_types.h"
 #include "worldmap.h"
 #include "render.h"
+#include "menu.h"
 
 #include <string>
 #include <iostream>
@@ -20,19 +21,23 @@ class CRLGame{
 
         CRender *Render;
         bool m_scene_changed;
-
+        CMenu *m_menu_main;
+        CCharGeneration *m_char_generation;
 
     public:
 
         CRLGame(){
+
             m_game_state=EGS_None;
             m_world_map=NULL;
             Render=NULL;
+            m_char_generation=NULL;
+
             m_scene_changed=true;
             error_str="";
             if(this->initRender()){
                 if(this->initGame()){
-                    m_game_state=EGS_WorldMap;
+                    m_game_state=EGS_MainMenu;
                 }
             }
         }
@@ -43,6 +48,9 @@ class CRLGame{
             }
             if(Render!=NULL){
                 delete Render;
+            }
+            if(m_menu_main!=NULL){
+                delete m_menu_main;
             }
         }
 
@@ -59,6 +67,17 @@ class CRLGame{
             // create world map
             m_world_map=new CWorldMap(80,25);
             m_world_map->Generate();
+            // create main menu
+            m_menu_main=new CMenu();
+            m_menu_main->Position={15,5};
+            // menu entry
+            m_menu_main->Add("Новая игра", &CRLGame::NewGame);
+            m_menu_main->Add("Продолжить", NULL);
+            m_menu_main->Add("Справка", NULL);
+            m_menu_main->Add("Выход", &CRLGame::Exit);
+
+            m_menu_main->SelectPosition(0);
+
             return true;
         }
 
@@ -87,11 +106,22 @@ class CRLGame{
         void CheckEvents(); // check events
         void Update(double DeltaTime); // update (not game cycle update, update main draw loop - for animation)
 
+
+        void SceneChanged(){ m_scene_changed=true; };
+        bool isSceneChanged(){ return m_scene_changed==true; };
+
         void SetGameState(EGameState state){
             m_game_state=state;
-            m_scene_changed=true;
+            SceneChanged();
         }
 
+    protected:
+        void NewGame(){
+            SetGameState(EGS_CharGeneration);
+        }
+        void Exit(){
+            SetGameState(EGS_Exit);
+        }
 };
 
 #endif // GAME_H_INCLUDED

@@ -3,6 +3,8 @@
 
 #include <inttypes.h>
 
+class CRLGame;
+
 // World Map Biomes //////////////////////////////////
 enum WM_Biome{
     WMB_DeepWater,      // blue ~
@@ -30,22 +32,19 @@ enum EGameTile{
 enum EGameState{
     EGS_None,
     EGS_MainMenu,
+    EGS_CharGeneration,
     EGS_Pause,          // Save/Continue Game menu
     EGS_WorldMap,
     EGS_Exit
 };
-/*
-enum EWorldMapObjects{
-    WMO_CastleCity
-    WMO_CIty,
-    WMO_Villadge,
-    WMO_Cave,
-}
-*/
+
 // define types
 
 struct Coords2i{
     int x, y;
+    Coords2i&    operator-=(const Coords2i& c) {
+        x -= c.x; y -= c.y; return *this;
+    }
 };
 
 struct Tile{
@@ -58,5 +57,12 @@ struct WorldMapBiome{
     bool is_viewed;     // player view this map location
     int data;           // temporary data
 };
+
+struct MenuEntry
+{
+	const char* name;
+	void (CRLGame::*func)();
+};
+
 
 #endif // TILES_LIST_H_INCLUDED

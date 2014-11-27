@@ -74,7 +74,7 @@ void CWorldMap::Generate(){
                     std::cout << " ISLAND size: " << island_size << std::endl;
                     if(island_size<5){ // small island - need remove
                         this->setMapBiome(islands+1,WMB_ShallowWater);
-                        std::cout << " ISLAND removbed " << std::endl;
+                        std::cout << " ISLAND removed " << std::endl;
                         islands--;
                     }
                 }

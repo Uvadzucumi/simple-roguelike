@@ -3,6 +3,9 @@
 
 #include "game_types.h"
 #include "worldmap.h"
+#include "menu.h"
+#include "char_generation.h"
+
 #include "include/BearLibTerminal.h"
 
 #include <iostream>
@@ -25,19 +28,9 @@ class CRender{
         return true;
     }
 
-// render worldmap screen
-    void WorldMap(CWorldMap *wm){
-        Tile tile;
-        terminal_clear();
-        terminal_color(color_from_name("light green"));
-        for(int y = 0; y < wm->getHeight(); y++){
-            for(int x = 0; x < wm->getWidth(); x++){
-                tile=this->getTileById(wm->getTileId(x, y));
-                terminal_color(tile.color);
-                terminal_put(x, y, tile.ch);
-            }
-        }
-    }
+    void WorldMap(CWorldMap *wm);                   // render worldmap screen
+    void CharGeneration(CCharGeneration *ch);       //
+    void Menu(CMenu *m);
 
 // return tile by tile id
     Tile getTileById(EGameTile tile_id){
