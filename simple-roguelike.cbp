@@ -40,6 +40,8 @@
 		<Unit filename="game.h" />
 		<Unit filename="game_types.h" />
 		<Unit filename="items.h" />
+		<Unit filename="location_map.cpp" />
+		<Unit filename="location_map.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="map/mask.cpp" />
 		<Unit filename="map/mask.h" />

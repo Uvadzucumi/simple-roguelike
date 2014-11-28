@@ -22,7 +22,7 @@ enum EGameTile{
     // WorldMap tiles
     GT_Biome_DeepWater,      // blue ~
     GT_Biome_ShallowWater,   // white-blue ~
-    GT_Biome_Beach,          // ellow .
+    GT_Biome_Beach,          // yellow .
     GT_Biome_Plains,         // green .
     GT_Biome_Forest,         // green *
     GT_Biome_Hills,          // brown ~
@@ -34,8 +34,27 @@ enum EGameState{
     EGS_MainMenu,
     EGS_CharGeneration,
     EGS_Pause,          // Save/Continue Game menu
+    EGS_Game,
     EGS_WorldMap,
     EGS_Exit
+};
+
+enum ECharEffects{
+    CE_Poison,      //
+    CE_Diseased,    //
+    CE_Afraid,      //
+    CE_Insane,      //
+    CE_Drunk,       //
+    // another effects
+    CE_Weak,        // -50% damage by weapon
+    CE_Asleep,      // skip turns to first damage
+    CE_Cursed,      // success cast spells 1/3%
+    //
+    CE_Unconscious,
+    CE_Paralyzed,
+    CE_Stoned,
+    CE_Dead,
+    CE_Eradicated
 };
 
 // define types
