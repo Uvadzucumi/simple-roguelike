@@ -36,6 +36,7 @@
 			<Add option="-pthread" />
 			<Add library="BearLibTerminal" />
 		</Linker>
+		<Unit filename="char_generation.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
 		<Unit filename="game_types.h" />
@@ -49,6 +50,7 @@
 		<Unit filename="map/perlin.h" />
 		<Unit filename="map/rolling_particles_mask.cpp" />
 		<Unit filename="map/rolling_particles_mask.h" />
+		<Unit filename="menu.h" />
 		<Unit filename="render.cpp" />
 		<Unit filename="render.h" />
 		<Unit filename="worldmap.cpp" />

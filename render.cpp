@@ -76,7 +76,7 @@ void CRender::CharGeneration(CCharGeneration *ch){
             }
             break;
         case 1:
-            terminal_printf(5,6,"[color=yellow]Выберите навык основного оружия:");
+            terminal_printf(5,6,"[color=yellow]Выберите класс персонажа:");
 
 
 

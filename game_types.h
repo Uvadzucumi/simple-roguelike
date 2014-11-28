@@ -38,6 +38,37 @@ enum EGameState{
     EGS_Exit
 };
 
+// Characters classes
+enum ECharClass{
+    CC_Knight,
+    CC_Paladin,
+    CC_Archer,
+    CC_Druid,
+    CC_Cleric,
+    CC_Sorcerer
+};
+// Character Skills
+enum ECharScills{
+// weapon scills
+    CS_Sword,
+    CS_Axe,
+    CS_Spear,
+    CS_Mace,
+    CS_Dagger,
+    CS_Staff,
+    CS_Archery,
+    CS_Ancient,
+// Armor scills
+    CS_LeatherArmor,
+    CS_ChainMail,
+    CS_PlateArmor,
+    CS_Shields,
+// Magic scills
+
+
+}
+
+
 // define types
 
 struct Coords2i{
@@ -63,6 +94,8 @@ struct MenuEntry
 	const char* name;
 	void (CRLGame::*func)();
 };
+
+
 
 
 #endif // TILES_LIST_H_INCLUDED
