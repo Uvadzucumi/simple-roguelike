@@ -65,9 +65,18 @@ enum ECharScills{
     CS_PlateArmor,
     CS_Shields,
 // Magic scills
+    CS_MagicFile,
+    CS_MagicSky,
+    CS_MagicWater,
+    CS_MagicEarth,
 
+    CS_MagicSpirit,
+    CS_MagicMind,
+    CS_MagicBody,
 
-}
+    CS_MagicLight,
+    CS_MagicDark
+};
 
 enum ECharEffects{
     CE_Poison,      //

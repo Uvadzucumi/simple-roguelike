@@ -6,6 +6,8 @@
 #define BUILD_MAP_HEIGHT 128
 #define BUILD_MAP_WIDTH 128
 
+#include <vector>
+
 enum ELocationTileType{
     LTT_None,
     LTT_Grass,
@@ -16,6 +18,9 @@ enum ELocationTileType{
     LTT_Sand,
     LTT_WallTree,
     LTT_WallStone,
+    LTT_FloorWooden,
+    LTT_FloorStone,
+    LTT_Floor,
     // portals
     LTT_DoorClosed,
     LTT_DoorOpened,
@@ -52,7 +57,7 @@ class CLocation{
         int x, y;   // global map coordinates
     public:
         SLocationTile m_map[BUILD_MAP_HEIGHT*BUILD_MAP_WIDTH];
-        BuildMap(int current_portal, int player_x, int player_y);
+        void BuildMap(int current_portal, int player_x, int player_y);
 };
 
 extern std::vector<Portal> PortalTypes;

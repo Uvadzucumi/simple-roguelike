@@ -12,6 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
 				</Compiler>
 			</Target>
@@ -39,6 +40,8 @@
 		<Unit filename="char_generation.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
+		<Unit filename="game_db.cpp" />
+		<Unit filename="game_db.h" />
 		<Unit filename="game_types.h" />
 		<Unit filename="items.h" />
 		<Unit filename="location_map.cpp" />
