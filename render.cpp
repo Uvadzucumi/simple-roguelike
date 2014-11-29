@@ -1,12 +1,12 @@
 
 #include "render.h"
-
+#include "game_db.h"
 
 // render worldmap screen
 void CRender::WorldMap(CWorldMap *wm){
     Tile tile;
     terminal_clear();
-    terminal_color(color_from_name("light green"));
+    //terminal_color(color_from_name("light green"));
     for(int y = 0; y < wm->getHeight(); y++){
         for(int x = 0; x < wm->getWidth(); x++){
             tile=this->getTileById(wm->getTileId(x, y));
@@ -21,12 +21,12 @@ void CRender::Menu(CMenu *m){
 
     terminal_clear();
 
-    uint32_t color=color_from_name("orange"); // menu items color
-    uint32_t color_disabled=color_from_name("gray"); // disabled menu item
-    uint32_t color_selected=color_from_name("yellow"); // selected menu item
+    uint32_t color=color_from_name("orange");           // menu items color
+    uint32_t color_disabled=color_from_name("gray");    // disabled menu item
+    uint32_t color_selected=color_from_name("yellow");  // selected menu item
 
 
-    for (size_t i=0; i < m->ItemsCount(); i++){
+    for (int i=0; i < m->ItemsCount(); i++){
 		uint32_t mi_name_color=color;
         uint32_t mi_shorcut_color=color;
 
@@ -49,24 +49,46 @@ void CRender::Menu(CMenu *m){
 
 void CRender::CharGeneration(CCharGeneration *ch){
 
-    if(ch==NULL) return;
+    if(ch == NULL) return;
 
     terminal_clear();
 
+    uint32_t menu_color=color_from_name("orange");
+    uint32_t menu_disabled_color=color_from_name("gray");
+    uint32_t menu_selected_color=color_from_name("yellow");
+
+    uint32_t menu_item_color, menu_item_name_color;
+
     if(ch->getStatus()>0){
-        terminal_printf(5,5,"[color=yellow]Имя персонажа: [color=azure]%s",ch->getName());
+        terminal_printf(5,1,"[color=yellow]Имя персонажа: [color=azure]%s",ch->getName());
     }
+    if(ch->getStatus()>1){
+        terminal_printf(5,2,"[color=yellow]Класс: [color=azure]%s", CharClasses[ch->getClass()].name);
+    }
+
+    std::vector<CharacterSkill> char_skills=ch->getSelectedSkillsList();
+
+    if(ch->getStatus()>1){ // show selected skills
+        terminal_printf(5,3,"[color=yellow]Навыки персонажа:");
+        for(int i = 0; i < (int)char_skills.size(); i++){
+            terminal_printf(23, 3+i, "[color=azure]%s", char_skills[i].name);
+        }
+    }
+
+    std::vector<CharacterSkill> skills_list=ch->getClassSkillsList();
 
     size_t name_len;
     char buffer[50]={0};
 
+    int x,y;    // menu items draw variable
+
     switch(ch->getStatus()){
         case 0:
-            terminal_printf(5,5,"[color=yellow]Имя персонажа:");
+            terminal_printf(5,1,"[color=yellow]Имя персонажа:");
 
             terminal_color(color_from_name("azure"));
 
-            name_len=terminal_read_str(20, 5, buffer, 20);
+            name_len=terminal_read_str(20, 1, buffer, 20);
 
             std::cout << "Entered : " << name_len << " letters. Имя: " << buffer << std::endl;
 
@@ -76,15 +98,51 @@ void CRender::CharGeneration(CCharGeneration *ch){
             }
             break;
         case 1:
-            terminal_printf(5,6,"[color=yellow]Выберите класс персонажа:");
-
-
-
+            terminal_printf(5,2,"[color=yellow]Выберите класс персонажа:");
+            // display character classes
+            for( int i=0; i < (int)CharClasses.size(); i++){
+                if(i==ch->getMenuIndex()){
+                    terminal_color(menu_selected_color);
+                }else{
+                    terminal_color(menu_color);
+                }
+                terminal_printf(20,3+i,"%c) %s",'a'+i, CharClasses[i].name);
+            }
             break;
         case 2:
-            terminal_printf(5,7,"[color=yellow]Все верно?");
+            terminal_printf(5,7,"[color=yellow]Выберите дополнительные навыки ([color=green]%d[color=yellow]):",4-char_skills.size());
+            x=0; y=0;
+            for(int i=0; i < (int)skills_list.size(); i++){
+                if(i==ch->getMenuIndex()){
+                    menu_item_color=menu_selected_color;
+                }else{
+                    menu_item_color=menu_color;
+                }
+
+                if(ch->isSkillSelected(skills_list[i].id)){
+                    menu_item_name_color=menu_disabled_color;
+                }else{
+                    menu_item_name_color=menu_item_color;
+                }
+
+                terminal_color(menu_item_color);
+                terminal_printf(15+x,8+y,"%c)",'a'+i);
+                terminal_color(menu_item_name_color);
+                terminal_printf(18+x,8+y,"%s", skills_list[i].name);
+                y++;
+                if(y==10){ // 10 manu items in column
+                    x=20;
+                    y=0;
+                }
+            }
             break;
         default:
+            terminal_printf(5,7,"[color=yellow]Все верно? [color=azure](y/n)");
             break;
     }
+}
+
+void CRender::GameLoop(CGameLoop *game_loop){
+    terminal_clear();
+    terminal_printf(0,0,"[color=yellow]Игра!!!");
 }

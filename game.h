@@ -7,6 +7,7 @@
 #include "worldmap.h"
 #include "render.h"
 #include "menu.h"
+#include "game_loop.h"
 
 #include <string>
 #include <iostream>
@@ -23,6 +24,7 @@ class CRLGame{
         bool m_scene_changed;
         CMenu *m_menu_main;
         CCharGeneration *m_char_generation;
+        CGameLoop *m_game_loop;
 
     public:
 
@@ -32,6 +34,7 @@ class CRLGame{
             m_world_map=NULL;
             Render=NULL;
             m_char_generation=NULL;
+            m_game_loop=NULL;
 
             m_scene_changed=true;
             error_str="";

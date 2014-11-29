@@ -49,9 +49,9 @@ enum ECharClass{
     CC_Sorcerer
 };
 // Character Skills
-enum ECharScills{
+enum ECharSkills{
 // weapon scills
-    CS_Sword,
+    CS_Sword=0,
     CS_Axe,
     CS_Spear,
     CS_Mace,
@@ -75,7 +75,9 @@ enum ECharScills{
     CS_MagicBody,
 
     CS_MagicLight,
-    CS_MagicDark
+    CS_MagicDark,
+
+    CS_SKillsCount
 };
 
 enum ECharEffects{

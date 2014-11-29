@@ -5,23 +5,27 @@
 #include <vector>
 
 struct CharacterClass{
-    int id;
+    ECharClass id;
     const char *name;
+    ECharSkills def_skills[2];
 };
 
 struct CharacterSkill{
-    int id;
+    ECharSkills id;
     const char *name;
+    bool class_access[6];               // skill access for character classes
+    bool create_access;
 };
 
 struct CharacterEffect{
-    int id;
+    ECharEffects id;
     const char *name;
 };
 
-extern std::vector<CharacterClass> CharacterClasses;
+extern std::vector<CharacterClass> CharClasses;
 extern std::vector<CharacterSkill> CharSkills;
 extern std::vector<CharacterEffect> CharEffects;
+
 
 
 #endif // GAME_DB_H_INCLUDED

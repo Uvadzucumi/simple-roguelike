@@ -206,8 +206,8 @@ float Perlin::perlin_noise_2D(float vec[2])
 	float result = 0.0f;
     float amp = mAmplitude;
 
-    vec[0]*=mFrequency;
-    vec[1]*=mFrequency;
+    vec[0]*=freq;
+    vec[1]*=freq;
 
 	for( int i=0; i<terms; i++ ){
 		result += noise2(vec)*amp;

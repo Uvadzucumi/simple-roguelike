@@ -5,6 +5,7 @@
 #include "worldmap.h"
 #include "menu.h"
 #include "char_generation.h"
+#include "game_loop.h"
 
 #include "include/BearLibTerminal.h"
 
@@ -31,6 +32,7 @@ class CRender{
     void WorldMap(CWorldMap *wm);                   // render worldmap screen
     void CharGeneration(CCharGeneration *ch);       //
     void Menu(CMenu *m);
+    void GameLoop(CGameLoop *game_loop);
 
 // return tile by tile id
     Tile getTileById(EGameTile tile_id){

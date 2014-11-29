@@ -37,11 +37,15 @@
 			<Add option="-pthread" />
 			<Add library="BearLibTerminal" />
 		</Linker>
+		<Unit filename="char_generation.cpp" />
 		<Unit filename="char_generation.h" />
+		<Unit filename="creature.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
 		<Unit filename="game_db.cpp" />
 		<Unit filename="game_db.h" />
+		<Unit filename="game_loop.cpp" />
+		<Unit filename="game_loop.h" />
 		<Unit filename="game_types.h" />
 		<Unit filename="items.h" />
 		<Unit filename="location_map.cpp" />

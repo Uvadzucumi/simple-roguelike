@@ -26,18 +26,18 @@ class CMenu{
             m_items.push_back(item);
         }
 
-        bool SelectPosition(int index){
+        void SelectPosition(int index){
             m_selected=index;
         }
-
+/*
         void onMouse(int mouse_x, int mouse_y){
             int x_pos=mouse_x-Position.x;
             int y_pos=mouse_y-Position.y;
-            if(y_pos>=m_items.size()){
+            if(y_pos>=(int)m_items.size()){
                 SelectPosition(y_pos);
             }
         }
-
+*/
         const int ItemsCount(){
             return m_items.size();
         }
@@ -51,7 +51,7 @@ class CMenu{
             if (key >= TK_A && key <= TK_Z)
 			{
 				int index = key-TK_A;
-				if (index >= 0 && index < m_items.size() && m_items[index].func)
+				if (index >= 0 && index < (int)m_items.size() && m_items[index].func)
 				{
                     changed=true;
                     (g->*m_items[index].func)();
@@ -65,7 +65,7 @@ class CMenu{
 			}
 			if(key==TK_DOWN){
                 m_selected++;
-                if(m_selected == m_items.size()) m_selected=0;
+                if(m_selected == (int)m_items.size()) m_selected=0;
                 changed=true;
 			}
             if(key==TK_ENTER){

@@ -18,7 +18,12 @@ void CRLGame::RenderScene(){
                     m_char_generation=new CCharGeneration();
                 }
                 this->Render->CharGeneration(m_char_generation);
-                this->isSceneChanged();
+                break;
+            case EGS_Game:
+                if(m_game_loop==NULL){
+                    m_game_loop=new CGameLoop(m_char_generation);
+                }
+                this->Render->GameLoop(m_game_loop);
                 break;
             default:
                 break;
@@ -61,8 +66,15 @@ void CRLGame::CheckEvents(){
                 break;
             case EGS_CharGeneration:
                 if(this->m_char_generation!=NULL){
-                    m_char_generation->Events(this, key);
+                    m_char_generation->Events(key);
+                    if(this->m_char_generation->getStatus()==4){
+                        this->SetGameState(EGS_Game);
+                    }
                     this->SceneChanged();
+                }
+            case EGS_Game:
+                if(this->m_game_loop!=NULL){
+                    m_game_loop->Events(key);
                 }
             default:
                 break;
