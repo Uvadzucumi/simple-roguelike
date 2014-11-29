@@ -131,7 +131,7 @@ void CRender::CharGeneration(CCharGeneration *ch){
                 terminal_printf(18+x,8+y,"%s", skills_list[i].name);
                 y++;
                 if(y==10){ // 10 manu items in column
-                    x=20;
+                    x+=25;
                     y=0;
                 }
             }
