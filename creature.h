@@ -13,7 +13,7 @@ class CCreature{
         void setClass(ECharClass creature_class){
             m_class=creature_class;
         }
-        void setSkills(std::vector<CharacterSkill> &skills){
+        void setSkills(std::vector<CharacterSkill> skills){
             m_skills=skills;
         }
         void addSkill(CharacterSkill skill){

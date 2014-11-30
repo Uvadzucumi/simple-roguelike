@@ -2,6 +2,7 @@
 #define RENDER_H_INCLUDED
 
 #include "game_types.h"
+#include "game_db.h"
 #include "worldmap.h"
 #include "menu.h"
 #include "char_generation.h"
@@ -36,45 +37,12 @@ class CRender{
 
 // return tile by tile id
     Tile getTileById(EGameTile tile_id){
-        Tile tile;
-        switch(tile_id){
-            case GT_Biome_DeepWater:
-                tile.ch='~';
-                tile.color=color_from_name("blue");
-                break;
-            case GT_Biome_ShallowWater:
-                tile.ch='~';
-                tile.color=color_from_name("light azure");
-                break;
-            case GT_Biome_Beach:
-                tile.ch='.';
-                tile.color=color_from_name("yellow");
-                break;
-            case GT_Biome_Plains:
-                tile.ch='.';
-                tile.color=color_from_name("green");
-                break;
-            case GT_Biome_Forest:
-                tile.ch='*';
-                tile.color=color_from_name("green");
-                break;
-            case GT_Biome_Hills:
-                tile.ch='~';
-                //tile.color=color_from_name("flame");
-                tile.color=color_from_name("orange");
-                break;
-            case GT_Biome_Mountain:
-                tile.ch='^';
-                tile.color=color_from_name("white");
-                break;
-            default:
-                tile.ch='X';
-                tile.color=color_from_name("red");
-                break;
+        if(tile_id>=0 && tile_id<GameTiles.size()){
+            return GameTiles[tile_id];
+        }else{
+            return GameTiles[0];
         }
-        return tile;
     }
-
 };
 
 #endif // RENDER_H_INCLUDED

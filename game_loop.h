@@ -1,14 +1,16 @@
 #ifndef GAME_LOOP_H_INCLUDED
 #define GAME_LOOP_H_INCLUDED
 
+#include "game_types.h"
 #include "char_generation.h"
 #include "creature.h"
 
+
 class CGameLoop{
-        CCreature *hero;
+        CCreature *m_hero;
     public:
-        CGameLoop(CCharGeneration *char_gen);
-        void Events(int key);
+        CGameLoop(CCreature *hero);
+        EGameState Events(int key);
 };
 
 #endif // GAME_LOOP_H_INCLUDED

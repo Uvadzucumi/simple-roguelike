@@ -7,7 +7,9 @@
 #include "worldmap.h"
 #include "render.h"
 #include "menu.h"
+#include "creature.h"
 #include "game_loop.h"
+
 
 #include <string>
 #include <iostream>
@@ -25,6 +27,7 @@ class CRLGame{
         CMenu *m_menu_main;
         CCharGeneration *m_char_generation;
         CGameLoop *m_game_loop;
+        CCreature *m_hero;
 
     public:
 
@@ -35,6 +38,7 @@ class CRLGame{
             Render=NULL;
             m_char_generation=NULL;
             m_game_loop=NULL;
+            m_hero=NULL;
 
             m_scene_changed=true;
             error_str="";
@@ -55,6 +59,9 @@ class CRLGame{
             if(m_menu_main!=NULL){
                 delete m_menu_main;
             }
+            if(m_hero!=NULL){
+                delete m_hero;
+            }
         }
 
         bool initRender(){
@@ -67,9 +74,6 @@ class CRLGame{
         }
 
         bool initGame(){
-            // create world map
-            m_world_map=new CWorldMap(80,25);
-            m_world_map->Generate();
             // create main menu
             m_menu_main=new CMenu();
             m_menu_main->Position={15,5};
@@ -105,9 +109,9 @@ class CRLGame{
             return 0;
         }
 
-        void RenderScene(); // render current state scene
-        void CheckEvents(); // check events
-        void Update(double DeltaTime); // update (not game cycle update, update main draw loop - for animation)
+        void RenderScene();             // render current state scene
+        void CheckEvents();             // check events
+        void Update(double DeltaTime);  // update (not game cycle update, update main draw loop - for animation)
 
 
         void SceneChanged(){ m_scene_changed=true; };

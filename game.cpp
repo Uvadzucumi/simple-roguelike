@@ -4,6 +4,7 @@
 #include <iostream>
 
 void CRLGame::RenderScene(){
+    if(this->Render==NULL) return;
     if(m_scene_changed){
 
         switch(m_game_state){
@@ -21,7 +22,15 @@ void CRLGame::RenderScene(){
                 break;
             case EGS_Game:
                 if(m_game_loop==NULL){
-                    m_game_loop=new CGameLoop(m_char_generation);
+                    // create world map
+                    if(m_world_map==NULL){
+                        m_world_map=new CWorldMap(80,25);
+                        m_world_map->Generate();
+                    }
+                    m_hero=new CCreature;
+                    m_hero->setClass(m_char_generation->getClass());
+                    m_hero->setSkills(m_char_generation->getSelectedSkillsList());
+                    m_game_loop=new CGameLoop(m_hero);
                 }
                 this->Render->GameLoop(m_game_loop);
                 break;
@@ -72,9 +81,25 @@ void CRLGame::CheckEvents(){
                     }
                     this->SceneChanged();
                 }
+            case EGS_WorldMap:
+                if(key==TK_ESCAPE){
+                    if(!m_world_map->getState()){ // state = 0
+                        this->SetGameState(EGS_Game);
+                    }else{
+                        m_world_map->setState(0);
+                        this->SceneChanged();
+                    }
+                }else if(key==TK_SLASH && terminal_state(TK_SHIFT)){
+                    m_world_map->setState(1); // display world info
+                    this->SceneChanged();
+                }
+                break;
             case EGS_Game:
                 if(this->m_game_loop!=NULL){
-                    m_game_loop->Events(key);
+                    EGameState tmp=m_game_loop->Events(key);
+                    if(tmp!=EGS_Game){
+                        this->SetGameState(tmp);
+                    }
                 }
             default:
                 break;

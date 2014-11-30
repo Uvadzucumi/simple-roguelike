@@ -115,7 +115,7 @@ struct Tile{
 struct WorldMapBiome{
     WM_Biome biome;     // biome type
     bool is_viewed;     // player view this map location
-    int data;           // temporary data
+    int island;         // temporary data
 };
 
 struct MenuEntry

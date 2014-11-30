@@ -7,13 +7,22 @@ void CRender::WorldMap(CWorldMap *wm){
     Tile tile;
     terminal_clear();
     //terminal_color(color_from_name("light green"));
-    for(int y = 0; y < wm->getHeight(); y++){
-        for(int x = 0; x < wm->getWidth(); x++){
-            tile=this->getTileById(wm->getTileId(x, y));
-            terminal_color(tile.color);
-            terminal_put(x, y, tile.ch);
+    if(!wm->getState()){
+        for(int y = 0; y < wm->getHeight(); y++){
+            for(int x = 0; x < wm->getWidth(); x++){
+                tile=this->getTileById(wm->getTileId(x, y));
+                terminal_color(tile.color);
+                terminal_put(x, y, tile.ch);
+            }
+        }
+        terminal_print(50,24,"[color=yellow][[[color=azure]?[color=yellow]]] - Информация");
+    }else{ // display world info
+        terminal_printf(1,1,"[color=yellow]Островов: [color=azure]%d",wm->getIslandsCount());
+        for(int i=0; i < wm->getIslandsCount(); i++ ){
+            terminal_printf(5, 2+i, "[color=yellow]Остров: [color=azure]%s [color=yellow]размер: [color=azure]%d", wm->getIslandName(i), wm->getIslandSize(i));
         }
     }
+    terminal_print(67,24,"[color=yellow][[[color=azure]ESC[color=yellow]]] - Выход");
 }
 
 void CRender::Menu(CMenu *m){
@@ -137,7 +146,7 @@ void CRender::CharGeneration(CCharGeneration *ch){
             }
             break;
         default:
-            terminal_printf(5,7,"[color=yellow]Все верно? [color=azure](y/n)");
+            terminal_printf(5,7,"[color=yellow]Все верно? ([color=azure]y[color=yellow]/[color=azure]n[color=yellow])");
             break;
     }
 }

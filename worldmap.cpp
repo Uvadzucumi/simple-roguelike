@@ -51,9 +51,9 @@ void CWorldMap::Generate(){
             m_map[index].biome=this->getBiomeByHeight(h); // set biome
             // set water, not water - for calculate islands & remove small islands
             if( m_map[index].biome==WMB_DeepWater || m_map[index].biome==WMB_ShallowWater){
-                m_map[index].data=1; // water
+                m_map[index].island=-1; // water
             }else{
-                m_map[index].data=0; // not water
+                m_map[index].island=0; // not water
             }
             height_map[index]=h;
             if(max_height2<h){
@@ -62,20 +62,23 @@ void CWorldMap::Generate(){
         }
     }
     // calculate islands
-    int islands=0;
+    m_islands_count=0;
     bool not_found=true;
     do{
         for(int y=0; y < m_height; y++){
             for(int x=0; x < m_width; x++){
-                if(m_map[y*m_width+x].data==0){ // founded ground
-                    islands++;
-                    std::cout << "Island: " << islands << " In coords: " << x << "," << y << std::endl;
-                    int island_size=this->CheckIslandWave(x, y,islands+1);
+                if(m_map[y*m_width+x].island==0){ // founded ground
+                    m_islands_count++;
+                    std::cout << "Island: " << m_islands_count << " In coords: " << x << "," << y << std::endl;
+                    int island_size=this->CheckIslandWave(x, y,m_islands_count+1);
                     std::cout << " ISLAND size: " << island_size << std::endl;
                     if(island_size<5){ // small island - need remove
-                        this->setMapBiome(islands+1,WMB_ShallowWater);
+                        this->setMapBiome(m_islands_count+1,WMB_ShallowWater);
                         std::cout << " ISLAND removed " << std::endl;
-                        islands--;
+                        m_islands_count--;
+                    }else{
+                        m_islands_size.push_back(island_size);
+                        m_islands_names.push_back(this->GenerateName());
                     }
                 }
             }
@@ -173,21 +176,21 @@ EGameTile CWorldMap::getTileId(int x, int y){
     }
     return tile;
 }
-
+/*
 void CWorldMap::setMapTmpData(int value){
     for(int y=0; y<m_height-1; y++){
         for(int x=0; x< m_width; x++){
-            m_map[y*m_width+x].data=value;
+            m_map[y*m_width+x].island=value;
         }
     }
 }
-
+*/
 void CWorldMap::setMapBiome(int data_value, WM_Biome new_biome){
     for(int y=0; y<m_height-1; y++){
         for(int x=0; x< m_width; x++){
-            if(m_map[y*m_width+x].data==data_value){
+            if(m_map[y*m_width+x].island==data_value){
                 m_map[y*m_width+x].biome=new_biome;
-                m_map[y*m_width+x].data=1;
+                m_map[y*m_width+x].island=-1;
             };
         }
     }
@@ -212,7 +215,7 @@ int CWorldMap::CheckIslandWave(int start_x, int start_y, int marker){
     tmp.x=start_x; tmp.y=start_y;
     wave.clear();
     wave.push_back(tmp);
-    m_map[start_x+start_y*m_width].data=marker;
+    m_map[start_x+start_y*m_width].island=marker;
     // current wave
     int fields_cnt=1;
     do{
@@ -226,8 +229,8 @@ int CWorldMap::CheckIslandWave(int start_x, int start_y, int marker){
                 int x_index=wave[i].x+check[j].x;
                 if(x_index >= 0 && x_index < m_width && y_index >= 0 && y_index < m_height){
                     int index=y_index*m_width+x_index;
-                    if(!m_map[index].data){
-                        m_map[index].data=marker;
+                    if(m_map[index].island==0){
+                        m_map[index].island=marker;
                 // add to next
                         tmp.x=x_index;
                         tmp.y=y_index;
@@ -244,3 +247,29 @@ int CWorldMap::CheckIslandWave(int start_x, int start_y, int marker){
     return fields_cnt;
 }
 
+std::string CWorldMap::GenerateName(){
+    //std::string vowels = "aeiouy";
+    //std::vector<std::string> vowels = {"а","у","о","ы","и","э","я","ю","ё","е"};
+    std::vector<std::string> vowels = {"а","у","о","и","я","е"};
+    //std::string consonants = "bcdfghjklmnpqrstvwxz";
+    //std::vector<std::string> consonants = {"б","в","г","д","ж","з","й","к","л","м","н","п","р","с","т","ф","х","ц","ч","ш","щ"};
+    std::vector<std::string> consonants = {"б","в","г","д","ж","з","к","л","м","н","п","р","с","т","ф"};
+//    std::cout << vowels << std::endl << consonants << std::endl;
+// на Г и З заканчивать нельзя
+    std::string result="";
+    int length=3+rand()%3;
+    int cnt=0;
+    do{
+        result+=vowels[rand()%vowels.size()];
+        cnt++;
+        if(cnt==length) break;
+        result+=consonants[rand()%consonants.size()];
+        cnt++;
+        if(cnt==length) break;
+    }while(1);
+/*    if(rand()%2){
+        result+=consonants[rand()%consonants.size()];
+    }
+    */
+    return result;
+}
