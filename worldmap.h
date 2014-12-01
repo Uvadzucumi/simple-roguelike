@@ -18,6 +18,7 @@ struct Island{
     int size;
     std::string name;
     Coords2i bbox[2]; // 0 -top/left, 1 - right/bottom
+    std::vector<City> cities;
 };
 
 class CWorldMap{
@@ -70,6 +71,7 @@ class CWorldMap{
         const int getIslandsCount(){ return m_islands.size(); }
         int getIslandSize(int island_no){ return m_islands[island_no].size; }
         const char* getIslandName(int island_no){ return m_islands[island_no].name.c_str(); }
+        Island getIsland(int index){ return m_islands[index]; }
 
         WM_Biome getBiomeByHeight(int height, int water_line_height=120);
         void Generate();

@@ -128,21 +128,44 @@ void CWorldMap::Generate(){
         }
     }
 
-/*
+
     // create cities in main islands
     int cities_count=3+rand()%2; // 3-4 in main island
+    // temporary variable for detect city position
+    int city_pos_x;
+    int city_pos_y;
+
     for(unsigned int i=0; i<cities_count; i++){
         City city;
-        city.name=this->GenerateName();
+        //if(true){ // city near ocean
+            if(rand()%2==0){ // main side - Y
+                if(rand()%2==0){
+                    city_pos_x=m_islands[m_main_island_id].bbox[0].x; // left side
+                }else{
+                    city_pos_x=m_islands[m_main_island_id].bbox[1].x; // right side
+                }
+                city_pos_y=rand()%(m_islands[m_main_island_id].bbox[1].y-m_islands[m_main_island_id].bbox[0].y);
+            }else{ // main side X
+                if(rand()%2==0){
+                    city_pos_y=m_islands[m_main_island_id].bbox[0].x; // top side
+                }else{
+                    city_pos_y=m_islands[m_main_island_id].bbox[1].x; // bottom side
+                }
+                city_pos_x=rand()%(m_islands[m_main_island_id].bbox[1].x-m_islands[m_main_island_id].bbox[0].x);
+            }
+            city.name=this->GenerateName();
+            std::cout << "island: " << i << " City: " << city.name << "coords: " << city_pos_x << "," << city_pos_y << std::endl;
+
+            city.biome_coord.x=city_pos_x;
+            city.biome_coord.y=city_pos_y;
+
+            m_islands[m_main_island_id].cities.push_back(city);
+        //}
+        // create city position
     }
 
 
-    int sities_count=3+m_islands.size(); // 4 citiens in main island, 1 - in another islands
 
-    for(int i=0; i<sities_count; i++){
-        m_islands_count
-    }
-*/
 }
 
 

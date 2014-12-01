@@ -22,6 +22,17 @@ void CRender::WorldMap(CWorldMap *wm){
             terminal_printf(5, 2+i, "[color=yellow]Остров: [color=azure]%s [color=yellow]размер: [color=azure]%d", wm->getIslandName(i), wm->getIslandSize(i));
         }
     }
+    // display cities
+    for(int i=0; i < wm->getIslandsCount(); i++ ){
+        Island isl=wm->getIsland(i);
+        if(isl.cities.size()>0){
+            for(int j=0; j<isl.cities.size(); j++){
+                terminal_printf(isl.cities[i].biome_coord.x, isl.cities[i].biome_coord.y, "[color=white]O");
+            }
+        }
+    }
+
+
     terminal_print(67,24,"[color=yellow][[[color=azure]ESC[color=yellow]]] - Выход");
 }
 
