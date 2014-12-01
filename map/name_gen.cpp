@@ -1,4 +1,5 @@
 
+#include <stdlib.h>
 #include "name_gen.h"
 
 #define LAST_LETTER_CANDIDATES_MAX  5
