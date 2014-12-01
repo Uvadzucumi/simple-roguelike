@@ -9,6 +9,7 @@
 using namespace std;
 
 void CWorldMap::Generate(){
+
     // create temp height map
     float *height_map=new float[m_width*m_height];
 
@@ -248,28 +249,6 @@ int CWorldMap::CheckIslandWave(int start_x, int start_y, int marker){
 }
 
 std::string CWorldMap::GenerateName(){
-    //std::string vowels = "aeiouy";
-    //std::vector<std::string> vowels = {"а","у","о","ы","и","э","я","ю","ё","е"};
-    std::vector<std::string> vowels = {"а","у","о","и","я","е"};
-    //std::string consonants = "bcdfghjklmnpqrstvwxz";
-    //std::vector<std::string> consonants = {"б","в","г","д","ж","з","й","к","л","м","н","п","р","с","т","ф","х","ц","ч","ш","щ"};
-    std::vector<std::string> consonants = {"б","в","г","д","ж","з","к","л","м","н","п","р","с","т","ф"};
-//    std::cout << vowels << std::endl << consonants << std::endl;
-// на Г и З заканчивать нельзя
-    std::string result="";
-    int length=3+rand()%3;
-    int cnt=0;
-    do{
-        result+=vowels[rand()%vowels.size()];
-        cnt++;
-        if(cnt==length) break;
-        result+=consonants[rand()%consonants.size()];
-        cnt++;
-        if(cnt==length) break;
-    }while(1);
-/*    if(rand()%2){
-        result+=consonants[rand()%consonants.size()];
-    }
-    */
-    return result;
+    vector<std::string> names=m_namegen->generate(1);
+    return m_namegen->toCyrilic(names[0]);
 }

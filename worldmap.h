@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 
+#include "map/name_gen.h"
 
 class CWorldMap{
         int m_width;
@@ -16,12 +17,21 @@ class CWorldMap{
         std::vector<int> m_islands_size;
         std::vector<std::string> m_islands_names;
         int m_state;
+        CWeightedLetterNamegen *m_namegen;
 
     public:
         CWorldMap(int width, int height){
+            m_namegen=new CWeightedLetterNamegen();
             m_state=0;
             m_map=NULL;
             this->setSize(width, height);
+        }
+
+        ~CWorldMap(){
+            delete m_namegen;
+            if(m_map!=NULL){
+                delete m_map;
+            }
         }
 
         void setSize(int width, int height){

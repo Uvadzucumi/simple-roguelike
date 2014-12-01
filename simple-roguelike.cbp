@@ -53,6 +53,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="map/mask.cpp" />
 		<Unit filename="map/mask.h" />
+		<Unit filename="map/name_gen.cpp" />
+		<Unit filename="map/name_gen.h" />
 		<Unit filename="map/noise_mask.cpp" />
 		<Unit filename="map/noise_mask.h" />
 		<Unit filename="map/perlin.cpp" />
