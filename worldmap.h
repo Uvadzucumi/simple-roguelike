@@ -9,14 +9,25 @@
 
 #include "map/name_gen.h"
 
+struct City{
+    std::string name;
+    Coords2i biome_coord;
+};
+
+struct Island{
+    int size;
+    std::string name;
+    Coords2i bbox[2]; // 0 -top/left, 1 - right/bottom
+};
+
 class CWorldMap{
         int m_width;
         int m_height;
         WorldMapBiome *m_map;
-        int m_islands_count;
-        std::vector<int> m_islands_size;
-        std::vector<std::string> m_islands_names;
         int m_state;
+        std::vector<Island> m_islands;
+        int m_main_island_id;
+
         CWeightedLetterNamegen *m_namegen;
 
     public:
@@ -56,9 +67,9 @@ class CWorldMap{
             m_state=state;
         }
 
-        int getIslandsCount(){ return m_islands_count; }
-        int getIslandSize(int island_no){ return m_islands_size[island_no]; }
-        const char* getIslandName(int island_no){ return m_islands_names[island_no].c_str(); }
+        const int getIslandsCount(){ return m_islands.size(); }
+        int getIslandSize(int island_no){ return m_islands[island_no].size; }
+        const char* getIslandName(int island_no){ return m_islands[island_no].name.c_str(); }
 
         WM_Biome getBiomeByHeight(int height, int water_line_height=120);
         void Generate();

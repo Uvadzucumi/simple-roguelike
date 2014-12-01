@@ -63,7 +63,8 @@ void CWorldMap::Generate(){
         }
     }
     // calculate islands
-    m_islands_count=0;
+    m_islands.clear();
+    int m_islands_count=0;
     bool not_found=true;
     do{
         for(int y=0; y < m_height; y++){
@@ -78,8 +79,12 @@ void CWorldMap::Generate(){
                         std::cout << " ISLAND removed " << std::endl;
                         m_islands_count--;
                     }else{
-                        m_islands_size.push_back(island_size);
-                        m_islands_names.push_back(this->GenerateName());
+                        Island i;
+                        i.name=this->GenerateName();
+                        i.size=island_size;
+                        i.bbox[0]={m_height,m_width};
+                        i.bbox[1]={0,0};
+                        m_islands.push_back(i);
                     }
                 }
             }
@@ -91,6 +96,53 @@ void CWorldMap::Generate(){
     delete[] height_map;
     delete rp;
     delete noise;
+
+    m_main_island_id=0;
+    // create cities
+    for(unsigned int i=0; i<m_islands.size(); i++){
+        // calculate island bbox
+        for(int y=0; y < m_height; y++){
+            for(int x=0; x < m_width; x++){
+                int index=y*m_width+x;
+                if(m_map[index].island==i+2){
+                    // top-left
+                    if(x<m_islands[i].bbox[0].x){
+                        m_islands[i].bbox[0].x=x;
+                    }
+                    if(y<m_islands[i].bbox[0].y){
+                        m_islands[i].bbox[0].y=y;
+                    }
+                    // right-bottom
+                    if(x>m_islands[i].bbox[1].x){
+                        m_islands[i].bbox[1].x=x;
+                    }
+                    if(y>m_islands[i].bbox[1].y){
+                        m_islands[i].bbox[1].y=y;
+                    }
+                }
+            }
+        }
+        // check for main island
+        if(m_islands[i].size > m_islands[m_main_island_id].size){
+            m_main_island_id=i;
+        }
+    }
+
+/*
+    // create cities in main islands
+    int cities_count=3+rand()%2; // 3-4 in main island
+    for(unsigned int i=0; i<cities_count; i++){
+        City city;
+        city.name=this->GenerateName();
+    }
+
+
+    int sities_count=3+m_islands.size(); // 4 citiens in main island, 1 - in another islands
+
+    for(int i=0; i<sities_count; i++){
+        m_islands_count
+    }
+*/
 }
 
 
@@ -221,7 +273,7 @@ int CWorldMap::CheckIslandWave(int start_x, int start_y, int marker){
     int fields_cnt=1;
     do{
         step++;
-        std::cout << " step: " << step << " wave size: " << wave.size() << std::endl;
+        //std::cout << " step: " << step << " wave size: " << wave.size() << std::endl;
         next_wave.clear();
         for(unsigned int i=0; i<wave.size(); i++){
         // check positions
