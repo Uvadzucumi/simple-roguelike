@@ -2,7 +2,7 @@
 #include "render.h"
 #include "game_db.h"
 
-// render worldmap screen
+// render world map screen
 void CRender::WorldMap(CWorldMap *wm){
     Tile tile;
     terminal_clear();
@@ -15,23 +15,31 @@ void CRender::WorldMap(CWorldMap *wm){
                 terminal_put(x, y, tile.ch);
             }
         }
-        terminal_print(50,24,"[color=yellow][[[color=azure]?[color=yellow]]] - Информация");
-    }else{ // display world info
-        terminal_printf(1,1,"[color=yellow]Островов: [color=azure]%d",wm->getIslandsCount());
+
+        // display cities
         for(int i=0; i < wm->getIslandsCount(); i++ ){
-            terminal_printf(5, 2+i, "[color=yellow]Остров: [color=azure]%s [color=yellow]размер: [color=azure]%d", wm->getIslandName(i), wm->getIslandSize(i));
+            Island isl=wm->getIsland(i);
+            if(isl.cities.size() > 0){
+                for(int j=0; j < (int)isl.cities.size(); j++){
+                    terminal_printf(isl.cities[j].biome_coord.x, isl.cities[j].biome_coord.y, "[color=white]#");
+                }
+            }
         }
-    }
-    // display cities
-    for(int i=0; i < wm->getIslandsCount(); i++ ){
-        Island isl=wm->getIsland(i);
-        if(isl.cities.size()>0){
-            for(int j=0; j<isl.cities.size(); j++){
-                terminal_printf(isl.cities[i].biome_coord.x, isl.cities[i].biome_coord.y, "[color=white]O");
+        terminal_print(50, 24, "[color=yellow][[[color=azure]?[color=yellow]]] - Информация");
+    }else{ // display world info
+        terminal_printf(1, 1, "[color=yellow]Островов: [color=azure]%d",wm->getIslandsCount());
+        int city_dy=0;
+        for(int i=0; i < wm->getIslandsCount(); i++ ){
+            Island isl=wm->getIsland(i);
+            terminal_printf(5, 2+i+city_dy, "[color=yellow]Остров: [color=azure]%s [color=yellow]размер: [color=azure]%d", wm->getIslandName(i), wm->getIslandSize(i));
+            if(isl.cities.size()>0){
+                for(int j=0; j < (int)isl.cities.size(); j++){
+                    terminal_printf(8,3+i+city_dy,"[color=green]%s [color=yellow][[%d,%d]]",isl.cities[j].name.c_str(),isl.cities[j].biome_coord.x, isl.cities[j].biome_coord.y);
+                    city_dy++;
+                }
             }
         }
     }
-
 
     terminal_print(67,24,"[color=yellow][[[color=azure]ESC[color=yellow]]] - Выход");
 }

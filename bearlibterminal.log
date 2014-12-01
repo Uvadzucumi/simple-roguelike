@@ -1,51 +1,51 @@
-00:47:09.487 [Info] Available OpenGL version: 1.4
-00:47:09.534 [Info] OpenGL: maximum texture size is 16384x16384
-00:47:09.534 [Info] OpenGL: GPU supports NPOTD textures
-00:47:09.534 [Trace] OpenGL: GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_video_sync GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_swap_control_tear GLX_EXT_texture_from_pixmap GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_robustness GLX_ARB_multisample GLX_NV_float_buffer GLX_ARB_fbconfig_float GLX_EXT_framebuffer_sRGB GLX_NV_multisample_coverage GLX_ARB_get_proc_address 
-00:47:09.534 [Trace] OpenGL context has GLX_EXT_swap_control extension
-00:47:09.555 [Trace] Entering X11-specific window thread function
-00:47:09.555 [Debug] Group "window":
-00:47:09.555 [Debug] * "icon" = "default"
-00:47:09.555 [Debug] * "size" = "80x25"
-00:47:09.555 [Debug] Group "font":
-00:47:09.555 [Debug] * "name" = "default"
-00:47:09.555 [Debug] Tileset resource name "default" is recognized as a name of a bitmap resource
-00:47:09.555 [Debug] Bitmap tileset: failed to parse guessed tile size, not an error
-00:47:09.555 [Debug] Requested resource "tileset-default" with possible prefix "codepage-"
-00:47:09.555 [Debug] Resource "codepage-tileset-default" is built-in
-00:47:09.556 [Debug] Requested resource "default" with possible prefix "tileset-"
-00:47:09.556 [Debug] Resource "tileset-default" is built-in
-00:47:09.559 [Trace] Loaded PNG image, 256x320
-00:47:09.559 [Debug] Tileset has 32x20 tiles
-00:47:09.559 [Debug] Successfully loaded a tileset for base code 0
-00:47:09.559 [Debug] Group "terminal":
-00:47:09.559 [Debug] * "encoding" = "utf8"
-00:47:09.559 [Debug] Saved new tileset for base code 0
-00:47:09.560 [Trace] Added tile texture #39268000
-00:47:09.560 [Info] Added Unicode replacement character tile (8x16)
-00:47:09.560 [Debug] SetOptions: new cell size is 8x16
-00:47:09.560 [Debug] SetOptions: new window size is 80x25
-00:47:09.572 [Info] Trying to set "window: size=80x25, cellsize=auto, title='Simple RL Game'; font: default"
-00:47:09.572 [Debug] Group "window":
-00:47:09.572 [Debug] * "cellsize" = "auto"
-00:47:09.572 [Debug] * "size" = "80x25"
-00:47:09.573 [Debug] * "title" = "Simple RL Game"
-00:47:09.573 [Debug] Group "font":
-00:47:09.573 [Debug] * "name" = "default"
-00:47:09.573 [Debug] Tileset resource name "default" is recognized as a name of a bitmap resource
-00:47:09.573 [Debug] Bitmap tileset: failed to parse guessed tile size, not an error
-00:47:09.573 [Debug] Requested resource "tileset-default" with possible prefix "codepage-"
-00:47:09.574 [Debug] Resource "codepage-tileset-default" is built-in
-00:47:09.574 [Debug] Requested resource "default" with possible prefix "tileset-"
-00:47:09.574 [Debug] Resource "tileset-default" is built-in
-00:47:09.578 [Trace] Loaded PNG image, 256x320
-00:47:09.578 [Debug] Tileset has 32x20 tiles
-00:47:09.578 [Debug] Successfully loaded a tileset for base code 0
-00:47:09.578 [Debug] Reloaded the tileset with base code 0
-00:47:09.579 [Trace] Scheduling texture #39268000 for removal
-00:47:09.579 [Trace] Added tile texture #39267104
-00:47:09.579 [Info] Added Unicode replacement character tile (8x16)
-00:47:09.579 [Debug] SetOptions: new cell size is 8x16
-00:48:59.916 [Trace] Leaving X11-specific window thread function
-00:48:59.934 [Trace] ~X11Window
-00:48:59.934 [Trace] Done with window object (X11)
+02:39:53.101 [Info] Available OpenGL version: 1.4
+02:39:53.148 [Info] OpenGL: maximum texture size is 16384x16384
+02:39:53.148 [Info] OpenGL: GPU supports NPOTD textures
+02:39:53.148 [Trace] OpenGL: GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_video_sync GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_swap_control_tear GLX_EXT_texture_from_pixmap GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_robustness GLX_ARB_multisample GLX_NV_float_buffer GLX_ARB_fbconfig_float GLX_EXT_framebuffer_sRGB GLX_NV_multisample_coverage GLX_ARB_get_proc_address 
+02:39:53.148 [Trace] OpenGL context has GLX_EXT_swap_control extension
+02:39:53.169 [Trace] Entering X11-specific window thread function
+02:39:53.169 [Debug] Group "window":
+02:39:53.169 [Debug] * "icon" = "default"
+02:39:53.169 [Debug] * "size" = "80x25"
+02:39:53.169 [Debug] Group "font":
+02:39:53.169 [Debug] * "name" = "default"
+02:39:53.169 [Debug] Tileset resource name "default" is recognized as a name of a bitmap resource
+02:39:53.169 [Debug] Bitmap tileset: failed to parse guessed tile size, not an error
+02:39:53.169 [Debug] Requested resource "tileset-default" with possible prefix "codepage-"
+02:39:53.169 [Debug] Resource "codepage-tileset-default" is built-in
+02:39:53.170 [Debug] Requested resource "default" with possible prefix "tileset-"
+02:39:53.170 [Debug] Resource "tileset-default" is built-in
+02:39:53.172 [Trace] Loaded PNG image, 256x320
+02:39:53.173 [Debug] Tileset has 32x20 tiles
+02:39:53.173 [Debug] Successfully loaded a tileset for base code 0
+02:39:53.173 [Debug] Group "terminal":
+02:39:53.173 [Debug] * "encoding" = "utf8"
+02:39:53.173 [Debug] Saved new tileset for base code 0
+02:39:53.173 [Trace] Added tile texture #8581744
+02:39:53.173 [Info] Added Unicode replacement character tile (8x16)
+02:39:53.173 [Debug] SetOptions: new cell size is 8x16
+02:39:53.173 [Debug] SetOptions: new window size is 80x25
+02:39:53.190 [Info] Trying to set "window: size=80x25, cellsize=auto, title='Simple RL Game'; font: default"
+02:39:53.190 [Debug] Group "window":
+02:39:53.190 [Debug] * "cellsize" = "auto"
+02:39:53.190 [Debug] * "size" = "80x25"
+02:39:53.190 [Debug] * "title" = "Simple RL Game"
+02:39:53.190 [Debug] Group "font":
+02:39:53.190 [Debug] * "name" = "default"
+02:39:53.190 [Debug] Tileset resource name "default" is recognized as a name of a bitmap resource
+02:39:53.190 [Debug] Bitmap tileset: failed to parse guessed tile size, not an error
+02:39:53.190 [Debug] Requested resource "tileset-default" with possible prefix "codepage-"
+02:39:53.191 [Debug] Resource "codepage-tileset-default" is built-in
+02:39:53.191 [Debug] Requested resource "default" with possible prefix "tileset-"
+02:39:53.191 [Debug] Resource "tileset-default" is built-in
+02:39:53.193 [Trace] Loaded PNG image, 256x320
+02:39:53.193 [Debug] Tileset has 32x20 tiles
+02:39:53.193 [Debug] Successfully loaded a tileset for base code 0
+02:39:53.194 [Debug] Reloaded the tileset with base code 0
+02:39:53.194 [Trace] Scheduling texture #8581744 for removal
+02:39:53.194 [Trace] Added tile texture #8580960
+02:39:53.194 [Info] Added Unicode replacement character tile (8x16)
+02:39:53.194 [Debug] SetOptions: new cell size is 8x16
+02:40:05.530 [Trace] Leaving X11-specific window thread function
+02:40:05.540 [Trace] ~X11Window
+02:40:05.540 [Trace] Done with window object (X11)

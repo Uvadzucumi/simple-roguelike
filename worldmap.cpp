@@ -64,20 +64,20 @@ void CWorldMap::Generate(){
     }
     // calculate islands
     m_islands.clear();
-    int m_islands_count=0;
+    int islands_count=0;
     bool not_found=true;
     do{
         for(int y=0; y < m_height; y++){
             for(int x=0; x < m_width; x++){
                 if(m_map[y*m_width+x].island==0){ // founded ground
-                    m_islands_count++;
-                    std::cout << "Island: " << m_islands_count << " In coords: " << x << "," << y << std::endl;
-                    int island_size=this->CheckIslandWave(x, y,m_islands_count+1);
+                    islands_count++;
+                    std::cout << "Island: " << islands_count << " In coords: " << x << "," << y << std::endl;
+                    int island_size=this->CheckIslandWave(x, y,islands_count+1);
                     std::cout << " ISLAND size: " << island_size << std::endl;
                     if(island_size<5){ // small island - need remove
-                        this->setMapBiome(m_islands_count+1,WMB_ShallowWater);
+                        this->setMapBiome(islands_count+1,WMB_ShallowWater);
                         std::cout << " ISLAND removed " << std::endl;
-                        m_islands_count--;
+                        islands_count--;
                     }else{
                         Island i;
                         i.name=this->GenerateName();
@@ -98,8 +98,8 @@ void CWorldMap::Generate(){
     delete noise;
 
     m_main_island_id=0;
-    // create cities
-    for(unsigned int i=0; i<m_islands.size(); i++){
+    // detect main island & calculate islands bbox
+    for(int i=0; i<(int)m_islands.size(); i++){
         // calculate island bbox
         for(int y=0; y < m_height; y++){
             for(int x=0; x < m_width; x++){
@@ -130,41 +130,73 @@ void CWorldMap::Generate(){
 
 
     // create cities in main islands
-    int cities_count=3+rand()%2; // 3-4 in main island
+    int cities_count=3+rand()%3; // 3-4 in main island
     // temporary variable for detect city position
+    for(int i=0; i<cities_count; i++){
+        this->AddCityToIsland(m_main_island_id);
+    }
+
+}
+
+void CWorldMap::AddCityToIsland(int island_id){
     int city_pos_x;
     int city_pos_y;
 
-    for(unsigned int i=0; i<cities_count; i++){
+    std::cout << "Island: " << m_main_island_id << " bbox[" <<
+               m_islands[island_id].bbox[0].x << "," << m_islands[island_id].bbox[0].y << "]x[" <<
+               m_islands[island_id].bbox[1].x << ","<< m_islands[island_id].bbox[1].y <<"]" << std::endl;
+
         City city;
+        int dx=0; int dy=0;
         //if(true){ // city near ocean
-            if(rand()%2==0){ // main side - Y
+            if(rand()%2==0){ // random side - Y
+                std::cout << "random side Y" << std::endl;
                 if(rand()%2==0){
-                    city_pos_x=m_islands[m_main_island_id].bbox[0].x; // left side
+                    std::cout << "left X" << std::endl;
+                    city_pos_x=m_islands[island_id].bbox[0].x; // left side
+                    dx=1;
                 }else{
-                    city_pos_x=m_islands[m_main_island_id].bbox[1].x; // right side
+                    std::cout << "right X" << std::endl;
+                    city_pos_x=m_islands[island_id].bbox[1].x; // right side
+                    dx=-1;
                 }
-                city_pos_y=rand()%(m_islands[m_main_island_id].bbox[1].y-m_islands[m_main_island_id].bbox[0].y);
-            }else{ // main side X
+                city_pos_y=city.biome_coord.y=m_islands[island_id].bbox[0].y+rand()%(m_islands[island_id].bbox[1].y-m_islands[island_id].bbox[0].y);
+            }else{ // random side X
+                std::cout << "random side X" << std::endl;
                 if(rand()%2==0){
-                    city_pos_y=m_islands[m_main_island_id].bbox[0].x; // top side
+                    std::cout << "top Y" << std::endl;
+                    city_pos_y=m_islands[island_id].bbox[0].y; // top side
+                    dy=1;
                 }else{
-                    city_pos_y=m_islands[m_main_island_id].bbox[1].x; // bottom side
+                    std::cout << "bottom Y" << std::endl;
+                    city_pos_y=m_islands[island_id].bbox[1].y; // bottom side
+                    dy=-1;
                 }
-                city_pos_x=rand()%(m_islands[m_main_island_id].bbox[1].x-m_islands[m_main_island_id].bbox[0].x);
+                city_pos_x=m_islands[island_id].bbox[0].x+rand()%(m_islands[island_id].bbox[1].x-m_islands[island_id].bbox[0].x);
             }
             city.name=this->GenerateName();
-            std::cout << "island: " << i << " City: " << city.name << "coords: " << city_pos_x << "," << city_pos_y << std::endl;
+            std::cout << "island: " << island_id << " City: " << city.name << " coords: " << city_pos_x << "," << city_pos_y << std::endl;
+            // move city to island
+            do{
+                int index=m_width*city_pos_y+city_pos_x;
+                if(m_map[index].island==island_id+2){
+                    break;
+                }
+                city_pos_x+=dx;
+                city_pos_y+=dy;
+            }while(city_pos_x >= 0 && city_pos_x < m_width && city_pos_y >= 0 && city_pos_y < m_height);
 
+            std::cout << "island: " << island_id << " City: " << city.name << " coords: " << city_pos_x << "," << city_pos_y << std::endl;
+            if(city_pos_y==m_height-1){ // hack for menu
+                    city_pos_y--;
+            }
             city.biome_coord.x=city_pos_x;
             city.biome_coord.y=city_pos_y;
 
             m_islands[m_main_island_id].cities.push_back(city);
+        //}else{ // generate city inside island
+
         //}
-        // create city position
-    }
-
-
 
 }
 

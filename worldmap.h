@@ -83,6 +83,7 @@ class CWorldMap{
 
         std::string GenerateName();
 
+        void AddCityToIsland(int island_id);
 };
 
 #endif // WORLDMAP_H_INCLUDED
