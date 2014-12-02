@@ -1,7 +1,7 @@
 #ifndef CREATURE_H_INCLUDED
 #define CREATURE_H_INCLUDED
 
-#include "game_types.h"
+#include "game_db.h"
 #include <vector>
 
 class CCreature{

@@ -59,7 +59,7 @@ std::vector<CharacterEffect> CharEffects = {
     {CE_Eradicated,"Искоренен"}
 };
 
-std::vector<Tile> GameTiles = {
+std::vector<TileDisplay> GameTiles = {
     {'X',COLOR_RED},    // GT_None
     {'~',COLOR_BLUE},   // GT_Biome_DeepWater
     {'~',COLOR_SKY},    // GT_Biome_ShallowWater
@@ -67,6 +67,38 @@ std::vector<Tile> GameTiles = {
     {'.',COLOR_GREEN},  // GT_Biome_Plains
     {'*',COLOR_GREEN},  // GT_Biome_Forest
     {'~',COLOR_ORANGE}, // GT_Biome_Hills
-    {'^',COLOR_WHITE}   // GT_Biome_Mountain
-};
+    {'^',COLOR_WHITE},  // GT_Biome_Mountain
+    // map tiles
+    {'.',COLOR_GREY},   //GT_Ground,
+    {'.',COLOR_GREEN},  //GT_Grass,
+    {'.',COLOR_ORANGE}, //GT_Road,
+    {'.',COLOR_SILVER}, //GT_RoadStone,
+    {'.',COLOR_YELLOW}, //GT_Floor,
+    {'.',COLOR_SILVER}, //GT_FloorStone,
+    {'.',COLOR_SKY},    //GT_FloorMramor,
 
+    {'T',COLOR_GREEN},  //GT_Tree,
+    {'T',COLOR_GREEN},  //GT_TreeApple,
+    {'v',COLOR_GREEN},  //GT_Bush,
+    {'v',COLOR_BLUE},   //GT_BrushСurrant,    // смородина
+    {'v',COLOR_SKY},    //GT_BrushGooseberry, // крыжовник
+
+    {'#',COLOR_YELLOW}, //GT_WallWoden,
+    {'#',COLOR_WHITE},  //GT_WallStone,
+    {'#',COLOR_SILVER}, //GT_WallOldStone,
+    {'#',COLOR_SKY},    //GT_WallMramor
+
+    {'|',COLOR_SKY},    //GT_Window,
+    {'\'',COLOR_SKY},   //GT_WindowOpen,
+
+    {'|',COLOR_YELLOW}, //GT_DoorWooden,
+    {'\'',COLOR_YELLOW},//GT_DoorWoodenOpen,
+    {'|',COLOR_WHITE},  //GT_DoorStone,
+    {'\'',COLOR_WHITE}, //GT_DoorStoneOpen,
+
+    {'<',COLOR_AZURE},  //GT_StairsWest,
+    {'>',COLOR_AZURE},  //GT_StairsEast,
+    {'^',COLOR_AZURE},  //GT_StairsNorth,
+    {'v',COLOR_AZURE},  //GT_StairsSouth
+
+};

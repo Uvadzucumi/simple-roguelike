@@ -7,11 +7,28 @@
 
 using namespace std;
 
-int main()
-{
+int main(int argc, char **argv){
+/*
+    printf("Аргументов: %d\n",argc);
+    for(int i=0;i<argc;i++){
+        printf("\t%d. %s\n",i,argv[i]);
+    }
+*/
+
     cout << GAME_TITLE << endl;
 
-    CRLGame *game=new CRLGame();
+    unsigned int world_seed;
+
+    if(argc > 1){
+        world_seed = atoi(argv[1]);
+    }else{
+        srand(time(NULL));
+        world_seed=rand()%RAND_MAX;
+    }
+
+    //world_seed=121;
+
+    CRLGame *game=new CRLGame(world_seed);
     if(game->isError()){
         cout << "Create Game error: " << game->getLastError() << std::endl;
         return -1;

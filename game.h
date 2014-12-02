@@ -3,7 +3,7 @@
 
 #include "include/BearLibTerminal.h"
 
-#include "game_types.h"
+#include "game_db.h"
 #include "worldmap.h"
 #include "render.h"
 #include "menu.h"
@@ -29,9 +29,13 @@ class CRLGame{
         CGameLoop *m_game_loop;
         CCreature *m_hero;
 
+        unsigned int m_world_seed;
+
     public:
 
-        CRLGame(){
+        CRLGame(unsigned int world_seed){
+
+            m_world_seed=world_seed;
 
             m_game_state=EGS_None;
             m_world_map=NULL;
@@ -74,6 +78,9 @@ class CRLGame{
         }
 
         bool initGame(){
+            std::cout << "world seed: " << m_world_seed << std::endl;
+            // set world seed
+            srand(m_world_seed);
             // create main menu
             m_menu_main=new CMenu();
             m_menu_main->Position={15,5};

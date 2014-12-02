@@ -10,7 +10,6 @@
 
 void CNoiseMask::Generate(){
 
-    srand(time(NULL));
     int noise_seed=rand()%RAND_MAX;
 
     Perlin *noise=new Perlin(NOISE_OCTAVES, NOISE_FREQUENCY, NOISE_AMPLITUDE, noise_seed);

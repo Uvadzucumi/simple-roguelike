@@ -4,7 +4,7 @@
 
 // render world map screen
 void CRender::WorldMap(CWorldMap *wm){
-    Tile tile;
+    TileDisplay tile;
     terminal_clear();
     //terminal_color(color_from_name("light green"));
     if(!wm->getState()){

@@ -6,6 +6,9 @@
 
 #include <iostream>
 
+#define BIOME_WIDTH     100
+#define BIOME_HEIGHT    100
+
 using namespace std;
 
 void CWorldMap::Generate(){
@@ -49,7 +52,8 @@ void CWorldMap::Generate(){
         for(int x=0; x < m_width; x++){
             int index=y*m_width+x;
             int h=255*height_map[index]/max_height;
-            m_map[index].biome=this->getBiomeByHeight(h); // set biome
+            m_map[index].biome=this->getBiomeByHeight(h);   // set biome
+            m_map[index].biome_seed=rand()%RAND_MAX;        // nedd for build biome outside map
             // set water, not water - for calculate islands & remove small islands
             if( m_map[index].biome==WMB_DeepWater || m_map[index].biome==WMB_ShallowWater){
                 m_map[index].island=-1; // water
@@ -358,4 +362,9 @@ int CWorldMap::CheckIslandWave(int start_x, int start_y, int marker){
 std::string CWorldMap::GenerateName(){
     vector<std::string> names=m_namegen->generate(1);
     return m_namegen->toCyrilic(names[0]);
+}
+
+
+void CreteBiomeOutMap(int x, int y){
+
 }

@@ -1,7 +1,7 @@
 #ifndef LOCATION_MAP_H_INCLUDED
 #define LOCATION_MAP_H_INCLUDED
 
-#include "game_types.h"
+#include "game_db.h"
 
 #define BUILD_MAP_HEIGHT 128
 #define BUILD_MAP_WIDTH 128

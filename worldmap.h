@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#include "game_types.h"
+#include "game_db.h"
 #include <vector>
 #include <string>
 

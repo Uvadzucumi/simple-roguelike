@@ -1,7 +1,7 @@
 #ifndef MENU_H_INCLUDED
 #define MENU_H_INCLUDED
 
-#include "game_types.h"
+#include "game_db.h"
 class CRLGame;
 
 #include <vector>

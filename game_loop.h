@@ -1,7 +1,7 @@
 #ifndef GAME_LOOP_H_INCLUDED
 #define GAME_LOOP_H_INCLUDED
 
-#include "game_types.h"
+#include "game_db.h"
 #include "char_generation.h"
 #include "creature.h"
 

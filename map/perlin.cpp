@@ -96,9 +96,8 @@ float Perlin::noise3(float vec[3])
 	float rx0, rx1, ry0, ry1, rz0, rz1, *q, sy, sz, a, b, c, d, t, u, v;
 	int i, j;
 
-	if (mStart)
-  {
-    srand(mSeed);
+	if (mStart){
+        srand(mSeed);
 		mStart = false;
 		init();
 	}

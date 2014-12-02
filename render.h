@@ -1,7 +1,6 @@
 #ifndef RENDER_H_INCLUDED
 #define RENDER_H_INCLUDED
 
-#include "game_types.h"
 #include "game_db.h"
 #include "worldmap.h"
 #include "menu.h"
@@ -36,7 +35,7 @@ class CRender{
     void GameLoop(CGameLoop *game_loop);
 
 // return tile by tile id
-    Tile getTileById(EGameTile tile_id){
+    TileDisplay getTileById(EGameTile tile_id){
         if(tile_id>=0 && tile_id<GameTiles.size()){
             return GameTiles[tile_id];
         }else{
