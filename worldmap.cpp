@@ -5,9 +5,10 @@
 #include "map/rolling_particles_mask.h"
 
 #include <iostream>
+#include <cmath>
 
-#define BIOME_WIDTH     100
-#define BIOME_HEIGHT    100
+#define CITIES_DENSITY          10
+#define CITIES_MIN_DISTANCE     5
 
 using namespace std;
 
@@ -86,7 +87,7 @@ void CWorldMap::Generate(){
                         Island i;
                         i.name=this->GenerateName();
                         i.size=island_size;
-                        i.bbox[0]={m_height,m_width};
+                        i.bbox[0]={m_width,m_height};
                         i.bbox[1]={0,0};
                         m_islands.push_back(i);
                     }
@@ -134,10 +135,18 @@ void CWorldMap::Generate(){
 
 
     // create cities in main islands
-    int cities_count=3+rand()%3; // 3-4 in main island
+    //int cities_count=3+rand()%3; // 3-4 in main island
     // temporary variable for detect city position
-    for(int i=0; i<cities_count; i++){
-        this->AddCityToIsland(m_main_island_id);
+    //for(int i=0; i<cities_count; i++){
+    //    this->AddCityToIsland(m_main_island_id);
+    //}
+
+    for(int i=0; i < m_islands.size(); i++){
+        int cities_count = int(((float) m_islands[i].size / (float)(m_width * m_height)) * (float) CITIES_DENSITY + 0.5);
+        std::cout << "Island: " << m_islands[i].name << " int( (" << m_islands[i].size << " / " << (m_width * m_height) << ") * " << CITIES_DENSITY << " + 0.5) = sities: " << cities_count << std::endl;
+        for(int c=0; c < cities_count; c++){
+            this->AddCityToIsland(i);
+        }
     }
 
 }
@@ -146,11 +155,13 @@ void CWorldMap::AddCityToIsland(int island_id){
     int city_pos_x;
     int city_pos_y;
 
-    std::cout << "Island: " << m_main_island_id << " bbox[" <<
+    std::cout << "Island: " << island_id << " bbox[" <<
                m_islands[island_id].bbox[0].x << "," << m_islands[island_id].bbox[0].y << "]x[" <<
                m_islands[island_id].bbox[1].x << ","<< m_islands[island_id].bbox[1].y <<"]" << std::endl;
 
-        City city;
+    City city;
+
+    while(true){
         int dx=0; int dy=0;
         //if(true){ // city near ocean
             if(rand()%2==0){ // random side - Y
@@ -178,11 +189,11 @@ void CWorldMap::AddCityToIsland(int island_id){
                 }
                 city_pos_x=m_islands[island_id].bbox[0].x+rand()%(m_islands[island_id].bbox[1].x-m_islands[island_id].bbox[0].x);
             }
-            city.name=this->GenerateName();
-            std::cout << "island: " << island_id << " City: " << city.name << " coords: " << city_pos_x << "," << city_pos_y << std::endl;
+            std::cout << "island: " << island_id << " City coords: " << city_pos_x << "," << city_pos_y << std::endl;
             // move city to island
             do{
                 int index=m_width*city_pos_y+city_pos_x;
+                //std::cout << "coord: " << city_pos_x << "," << city_pos_y << " island: " << m_map[index].island << std::endl;
                 if(m_map[index].island==island_id+2){
                     break;
                 }
@@ -190,20 +201,45 @@ void CWorldMap::AddCityToIsland(int island_id){
                 city_pos_y+=dy;
             }while(city_pos_x >= 0 && city_pos_x < m_width && city_pos_y >= 0 && city_pos_y < m_height);
 
-            std::cout << "island: " << island_id << " City: " << city.name << " coords: " << city_pos_x << "," << city_pos_y << std::endl;
+            std::cout << "island: " << island_id << " City coords: " << city_pos_x << "," << city_pos_y << std::endl;
             if(city_pos_y==m_height-1){ // hack for menu
-                    city_pos_y--;
+                city_pos_y--;
             }
-            city.biome_coord.x=city_pos_x;
-            city.biome_coord.y=city_pos_y;
 
-            m_islands[m_main_island_id].cities.push_back(city);
         //}else{ // generate city inside island
 
         //}
 
+        if(checkDistanceToCity(island_id, city_pos_x, city_pos_y)){ // else - repeat city coords generation
+            city.biome_coord.x=city_pos_x;
+            city.biome_coord.y=city_pos_y;
+            city.name=this->GenerateName();
+            m_islands[island_id].cities.push_back(city);
+            break;
+        }else{
+            std::cout << "Wrong distance. Recreate city coords" << std::endl;
+        }
+
+    }
+
 }
 
+bool CWorldMap::checkDistanceToCity(int island_id, int city_pos_x, int city_pos_y){
+    if(m_islands[island_id].cities.size()){
+        std::cout << "Check distance from " << city_pos_x << ", " << city_pos_y << " in island " <<  island_id << "." << std::endl;
+    }
+    for(int i=0; i < (int)m_islands[island_id].cities.size(); i++){
+        int x=m_islands[island_id].cities[i].biome_coord.x;
+        int y=m_islands[island_id].cities[i].biome_coord.y;
+        std::cout << m_islands[island_id].cities[i].biome_coord << " - ";
+        float distance=sqrt( (city_pos_x-x)*(city_pos_x-x) + (city_pos_y-y)*(city_pos_y-y) );
+        std::cout << "    distance = " << distance << std::endl;
+        if( distance < CITIES_MIN_DISTANCE){
+            return false;
+        }
+    }
+    return true;
+}
 
 WM_Biome CWorldMap::getBiomeByHeight(int height, int water_line_height){
     WM_Biome ret;
@@ -364,7 +400,30 @@ std::string CWorldMap::GenerateName(){
     return m_namegen->toCyrilic(names[0]);
 }
 
+// return out map for current biome (in world map biome coords x,y)
+TileGame* CWorldMap::getBiomeOutMap(int biome_x, int biome_y){
+    int index=biome_y*m_width+biome_x;
+    if(m_map[index].biome_map==NULL){
+        m_map[index].biome_map=new TileGame[BIOME_WIDTH*BIOME_HEIGHT];
 
-void CreteBiomeOutMap(int x, int y){
-
+        srand(m_map[index].biome_seed); // set biome randomize
+        // temporary - all biomes - grass
+        for(int y = 0; y < BIOME_HEIGHT; y++){
+            for(int x = 0; x < BIOME_WIDTH; x++){
+                int map_index=y*BIOME_WIDTH+x;
+                m_map[index].biome_map[map_index].tile_type=GT_Grass;
+                m_map[index].biome_map[map_index].is_viewed=false;
+                m_map[index].biome_map[map_index].is_view=false;
+            }
+            // set trees & bushes (5%)
+            int count=(BIOME_WIDTH*BIOME_HEIGHT)*(3+rand()%3)/100;
+            for(int i=0; i<count; i++){
+                int map_index=(rand()%BIOME_HEIGHT) * BIOME_WIDTH + rand()%BIOME_WIDTH;
+                //m_map[index].biome_map[map_index].tile_type=GT_Tree+rand()%2;
+                m_map[index].biome_map[map_index].tile_type=GT_Tree;
+            }
+        }
+        std::cout << "Created map for biome [" << biome_x << "," << biome_y << "]" << std::endl;
+    }
+    return m_map[biome_y*m_width+biome_x].biome_map;
 }

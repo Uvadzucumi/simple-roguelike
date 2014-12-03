@@ -178,13 +178,14 @@ struct Coords2i{
 struct TileDisplay{
     char ch;
     uint32_t color;
+    bool is_can_see;
+    bool is_can_move;
 };
 
 struct TileGame{
     EGameTile tile_type;
     bool is_viewed;
     bool is_view;
-    bool is_can_move;
 };
 
 struct WorldMapBiome{
@@ -192,6 +193,14 @@ struct WorldMapBiome{
     bool is_viewed;     // player view this map location
     int island;         // temporary data
     unsigned int biome_seed;
+    TileGame *biome_map;
+    WorldMapBiome(){
+        biome=WMB_DeepWater;
+        is_viewed=false;
+        island=-1;
+        biome_map=NULL;
+        biome_seed=0;
+    }
 };
 
 struct MenuEntry

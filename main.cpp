@@ -17,16 +17,18 @@ int main(int argc, char **argv){
 
     cout << GAME_TITLE << endl;
 
-    unsigned int world_seed;
+    unsigned int world_seed=0;
 
     if(argc > 1){
         world_seed = atoi(argv[1]);
-    }else{
+    }
+
+    if(!world_seed){
         srand(time(NULL));
         world_seed=rand()%RAND_MAX;
     }
 
-    //world_seed=121;
+//    world_seed=297785060;
 
     CRLGame *game=new CRLGame(world_seed);
     if(game->isError()){

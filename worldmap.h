@@ -9,6 +9,9 @@
 
 #include "map/name_gen.h"
 
+#define BIOME_WIDTH     100
+#define BIOME_HEIGHT    100
+
 struct City{
     std::string name;
     Coords2i biome_coord;
@@ -84,6 +87,9 @@ class CWorldMap{
         std::string GenerateName();
 
         void AddCityToIsland(int island_id);
+
+        TileGame* getBiomeOutMap(int biome_x, int biome_y);
+        bool checkDistanceToCity(int island_id, int city_pos_x, int city_pos_y);
 };
 
 #endif // WORLDMAP_H_INCLUDED
