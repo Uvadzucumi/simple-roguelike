@@ -11,6 +11,9 @@
 
 #include <iostream>
 
+#define VIEW_PORT_WIDTH     60
+#define VIEW_PORT_HEIGHT    25
+
 class CRender{
     public:
 
@@ -29,10 +32,10 @@ class CRender{
         return true;
     }
 
-    void WorldMap(CWorldMap *wm);                   // render worldmap screen
+    void WorldMap(CWorldMap *wm, CCreature *hero);                   // render worldmap screen
     void CharGeneration(CCharGeneration *ch);       //
     void Menu(CMenu *m);
-    void GameLoop(CGameLoop *game_loop);
+    void GameLoop(CGameLoop *game_loop, CWorldMap *wm);
 
 // return tile by tile id
     TileDisplay getTileById(EGameTile tile_id){
@@ -41,6 +44,12 @@ class CRender{
         }else{
             return GameTiles[0];
         }
+    }
+
+    void printfTile(int x, int y, EGameTile tile_id){
+        TileDisplay tile=this->getTileById(tile_id);
+        terminal_color(tile.color);
+        terminal_put(x,y,tile.ch);
     }
 };
 

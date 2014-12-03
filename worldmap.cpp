@@ -133,19 +133,14 @@ void CWorldMap::Generate(){
         }
     }
 
-
-    // create cities in main islands
-    //int cities_count=3+rand()%3; // 3-4 in main island
-    // temporary variable for detect city position
-    //for(int i=0; i<cities_count; i++){
-    //    this->AddCityToIsland(m_main_island_id);
-    //}
+    this->m_cities_count=0;
 
     for(int i=0; i < m_islands.size(); i++){
         int cities_count = int(((float) m_islands[i].size / (float)(m_width * m_height)) * (float) CITIES_DENSITY + 0.5);
         std::cout << "Island: " << m_islands[i].name << " int( (" << m_islands[i].size << " / " << (m_width * m_height) << ") * " << CITIES_DENSITY << " + 0.5) = sities: " << cities_count << std::endl;
         for(int c=0; c < cities_count; c++){
             this->AddCityToIsland(i);
+            this->m_cities_count++;
         }
     }
 
@@ -400,8 +395,26 @@ std::string CWorldMap::GenerateName(){
     return m_namegen->toCyrilic(names[0]);
 }
 
+City CWorldMap::getRandomCity(){
+    // calculati sities
+    City founded;
+    int city_cnt=0;
+    int city_num=rand()%m_cities_count;
+    for(int i = 0; i < m_islands.size(); i++){
+        for(int c = 0; c < m_islands[i].cities.size(); c++){
+            if(city_num==city_cnt){
+                founded=m_islands[i].cities[c];
+                break;
+            }
+            city_cnt++;
+        }
+    }
+    return founded;
+}
+
 // return out map for current biome (in world map biome coords x,y)
 TileGame* CWorldMap::getBiomeOutMap(int biome_x, int biome_y){
+
     int index=biome_y*m_width+biome_x;
     if(m_map[index].biome_map==NULL){
         m_map[index].biome_map=new TileGame[BIOME_WIDTH*BIOME_HEIGHT];
@@ -415,15 +428,34 @@ TileGame* CWorldMap::getBiomeOutMap(int biome_x, int biome_y){
                 m_map[index].biome_map[map_index].is_viewed=false;
                 m_map[index].biome_map[map_index].is_view=false;
             }
-            // set trees & bushes (5%)
-            int count=(BIOME_WIDTH*BIOME_HEIGHT)*(3+rand()%3)/100;
-            for(int i=0; i<count; i++){
-                int map_index=(rand()%BIOME_HEIGHT) * BIOME_WIDTH + rand()%BIOME_WIDTH;
-                //m_map[index].biome_map[map_index].tile_type=GT_Tree+rand()%2;
-                m_map[index].biome_map[map_index].tile_type=GT_Tree;
-            }
         }
-        std::cout << "Created map for biome [" << biome_x << "," << biome_y << "]" << std::endl;
+        int trees_count=(BIOME_WIDTH*BIOME_HEIGHT)*((float)(1+rand()%3)/200);
+        for(int i=0; i<trees_count; i++){
+            int map_index=(rand()%BIOME_HEIGHT) * BIOME_WIDTH + rand()%BIOME_WIDTH;
+            //m_map[index].biome_map[map_index].tile_type=GT_Tree+rand()%2;
+            m_map[index].biome_map[map_index].tile_type=GT_Tree;
+        }
+
+        int bush_count=(BIOME_WIDTH*BIOME_HEIGHT)*((float)(1+rand()%3)/300);
+        for(int i=0; i<bush_count; i++){
+            int map_index=(rand()%BIOME_HEIGHT) * BIOME_WIDTH + rand()%BIOME_WIDTH;
+            //m_map[index].biome_map[map_index].tile_type=GT_Tree+rand()%2;
+            m_map[index].biome_map[map_index].tile_type=GT_Bush;
+        }
+
+        std::cout << "Created map for biome [" << biome_x << "," << biome_y << "] trees = " << trees_count << " bush: " << bush_count << std::endl;
     }
     return m_map[biome_y*m_width+biome_x].biome_map;
+}
+
+// return game tile by world coordinates
+TileGame CWorldMap::getMapTile(int world_coord_x, int world_coord_y){
+    int biome_x=world_coord_x/BIOME_WIDTH;
+    int biome_y=world_coord_y/BIOME_HEIGHT;
+
+    int local_x=world_coord_x-biome_x*BIOME_WIDTH;
+    int local_y=world_coord_y-biome_y*BIOME_HEIGHT;
+
+    TileGame *biome_map=this->getBiomeOutMap(biome_x, biome_y);
+    return biome_map[local_y*BIOME_WIDTH+local_x];
 }

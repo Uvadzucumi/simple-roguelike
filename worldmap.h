@@ -31,6 +31,7 @@ class CWorldMap{
         int m_state;
         std::vector<Island> m_islands;
         int m_main_island_id;
+        int m_cities_count;
 
         CWeightedLetterNamegen *m_namegen;
 
@@ -86,10 +87,13 @@ class CWorldMap{
 
         std::string GenerateName();
 
+        City getRandomCity();
+
         void AddCityToIsland(int island_id);
+        bool checkDistanceToCity(int island_id, int city_pos_x, int city_pos_y);
 
         TileGame* getBiomeOutMap(int biome_x, int biome_y);
-        bool checkDistanceToCity(int island_id, int city_pos_x, int city_pos_y);
+        TileGame getMapTile(int world_coord_x, int world_coord_y);
 };
 
 #endif // WORLDMAP_H_INCLUDED

@@ -101,4 +101,24 @@ std::vector<TileDisplay> GameTiles = {
     {'^',COLOR_AZURE,true,true},  //GT_StairsNorth,
     {'v',COLOR_AZURE,true,true},  //GT_StairsSouth
 
+    // Creatures
+    {'@',COLOR_WHITE,true,true},    //GT_Hero,
+    {'h',COLOR_WHITE,true,true},    //GT_Human,
+
+    {'g',COLOR_GREEN,true,true},    //GT_MobGoblin,
+    {'g',COLOR_BLUE,true,true},     //GT_MobShaman,
+    {'g',COLOR_RED,true,true},      //GT_MobKing,
+
+    {'x',COLOR_GREY,true,true},     //GT_MobSpider,
+    {'X',COLOR_GREY,true,true},     //GT_MobSpiderGiant,
+    {'X',COLOR_YELLOW,true,true},   //GT_MobSpiderGreat,
+    {'X',COLOR_RED,true,true},      //GT_MobSpiderQueen,
+
+    {'b',COLOR_YELLOW,true,true},    //GT_MobBat,
+    {'b',COLOR_RED,true,true},    //GT_MobBatVampire,
+
+    {'s',COLOR_SKY,true,true},    //GT_MobSnake,
+    {'S',COLOR_SKY,true,true},    //GT_MobSnakeQueen
+
+
 };

@@ -8,12 +8,6 @@
 using namespace std;
 
 int main(int argc, char **argv){
-/*
-    printf("Аргументов: %d\n",argc);
-    for(int i=0;i<argc;i++){
-        printf("\t%d. %s\n",i,argv[i]);
-    }
-*/
 
     cout << GAME_TITLE << endl;
 

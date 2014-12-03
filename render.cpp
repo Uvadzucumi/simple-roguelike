@@ -3,7 +3,7 @@
 #include "game_db.h"
 
 // render world map screen
-void CRender::WorldMap(CWorldMap *wm){
+void CRender::WorldMap(CWorldMap *wm, CCreature *hero){
     TileDisplay tile;
     terminal_clear();
     //terminal_color(color_from_name("light green"));
@@ -25,6 +25,14 @@ void CRender::WorldMap(CWorldMap *wm){
                 }
             }
         }
+        // display hero
+        if(hero!=NULL){
+            Coords2i pos=hero->getWorldPosition();
+            int pos_x=pos.x/BIOME_WIDTH;
+            int pos_y=pos.y/BIOME_HEIGHT;
+            terminal_print(pos_x, pos_y,"[color=white]@");
+        }
+
         terminal_print(50, 24, "[color=yellow][[[color=azure]?[color=yellow]]] - Информация");
     }else{ // display world info
         terminal_printf(1, 1, "[color=yellow]Островов: [color=azure]%d",wm->getIslandsCount());
@@ -158,7 +166,7 @@ void CRender::CharGeneration(CCharGeneration *ch){
                 terminal_color(menu_item_name_color);
                 terminal_printf(18+x,8+y,"%s", skills_list[i].name);
                 y++;
-                if(y==10){ // 10 manu items in column
+                if(y==10){ // 10 menu items in column
                     x+=25;
                     y=0;
                 }
@@ -170,7 +178,22 @@ void CRender::CharGeneration(CCharGeneration *ch){
     }
 }
 
-void CRender::GameLoop(CGameLoop *game_loop){
+void CRender::GameLoop(CGameLoop *game_loop, CWorldMap *wm){
+    CCreature *hero=game_loop->getHero();
+    Coords2i hero_pos, left_top;
+    left_top=hero_pos=hero->getWorldPosition();
+    left_top.x-=VIEW_PORT_WIDTH/2;
+    left_top.y-=VIEW_PORT_HEIGHT/2;
+
     terminal_clear();
-    terminal_printf(0,0,"[color=yellow]Игра!!!");
+    for(int y = left_top.y, py = 0; y < left_top.y + VIEW_PORT_HEIGHT; y++, py++){
+        for(int x = left_top.x, px = 0 ; x < left_top.x + VIEW_PORT_WIDTH; x++, px++){
+            if(x==hero_pos.x && y==hero_pos.y){
+                printfTile(px,py,GT_Hero);
+            }else{
+                TileGame tile=wm->getMapTile(x, y);
+                printfTile(px,py,tile.tile_type);
+            }
+        }
+    }
 }

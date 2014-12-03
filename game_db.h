@@ -129,7 +129,7 @@ enum EGameTile{
     GT_Biome_Forest,         // green *
     GT_Biome_Hills,          // brown ~
     GT_Biome_Mountain,       // silver ^
-
+// location tiles
     GT_Ground,
     GT_Grass,
     GT_Road,
@@ -159,7 +159,25 @@ enum EGameTile{
     GT_StairsWest,
     GT_StairsEast,
     GT_StairsNorth,
-    GT_StairsSouth
+    GT_StairsSouth,
+// creatures
+    GT_Hero,
+    GT_Human,
+
+    GT_MobGoblin,
+    GT_MobShaman,
+    GT_MobKing,
+
+    GT_MobSpider,
+    GT_MobSpiderGiant,
+    GT_MobSpiderGreat,
+    GT_MobSpiderQueen,
+
+    GT_MobBat,
+    GT_MobBatVampire,
+
+    GT_MobSnake,
+    GT_MobSnakeQueen
 };
 
 // define types

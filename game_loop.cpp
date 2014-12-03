@@ -1,8 +1,9 @@
 
 #include "game_loop.h"
 
-CGameLoop::CGameLoop(CCreature *hero){
+CGameLoop::CGameLoop(CWorldMap *world_map, CCreature *hero){
    m_hero=hero;
+   m_world_map=world_map;
 }
 
 EGameState CGameLoop::Events(int key){

@@ -9,7 +9,7 @@ void CRLGame::RenderScene(){
 
         switch(m_game_state){
             case EGS_WorldMap:
-                this->Render->WorldMap(m_world_map);
+                this->Render->WorldMap(m_world_map, m_hero);
                 break;
             case EGS_MainMenu:
                 this->Render->Menu(this->m_menu_main);
@@ -30,9 +30,13 @@ void CRLGame::RenderScene(){
                     m_hero=new CCreature;
                     m_hero->setClass(m_char_generation->getClass());
                     m_hero->setSkills(m_char_generation->getSelectedSkillsList());
-                    m_game_loop=new CGameLoop(m_hero);
+
+                    City c=m_world_map->getRandomCity();
+                    m_hero->setWorldPosition(c.biome_coord.x*BIOME_WIDTH+BIOME_WIDTH/2, c.biome_coord.y*BIOME_HEIGHT+BIOME_HEIGHT/2); // set to center in selected biome
+
+                    m_game_loop=new CGameLoop(m_world_map, m_hero);
                 }
-                this->Render->GameLoop(m_game_loop);
+                this->Render->GameLoop(m_game_loop, m_world_map);
                 break;
             default:
                 break;
