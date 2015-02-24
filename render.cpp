@@ -182,6 +182,7 @@ void CRender::GameLoop(CGameLoop *game_loop, CWorldMap *wm){
     CCreature *hero=game_loop->getHero();
     Coords2i hero_pos, left_top;
     left_top=hero_pos=hero->getWorldPosition();
+    printf("LEFT TOP %d, %d\n",left_top.x, left_top.y);
     left_top.x-=VIEW_PORT_WIDTH/2;
     left_top.y-=VIEW_PORT_HEIGHT/2;
 

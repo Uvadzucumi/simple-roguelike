@@ -135,7 +135,7 @@ void CWorldMap::Generate(){
 
     this->m_cities_count=0;
 
-    for(int i=0; i < m_islands.size(); i++){
+    for(unsigned int i=0; i < m_islands.size(); i++){
         int cities_count = int(((float) m_islands[i].size / (float)(m_width * m_height)) * (float) CITIES_DENSITY + 0.5);
         std::cout << "Island: " << m_islands[i].name << " int( (" << m_islands[i].size << " / " << (m_width * m_height) << ") * " << CITIES_DENSITY << " + 0.5) = sities: " << cities_count << std::endl;
         for(int c=0; c < cities_count; c++){
@@ -400,8 +400,8 @@ City CWorldMap::getRandomCity(){
     City founded;
     int city_cnt=0;
     int city_num=rand()%m_cities_count;
-    for(int i = 0; i < m_islands.size(); i++){
-        for(int c = 0; c < m_islands[i].cities.size(); c++){
+    for(unsigned int i = 0; i < m_islands.size(); i++){
+        for(unsigned int c = 0; c < m_islands[i].cities.size(); c++){
             if(city_num==city_cnt){
                 founded=m_islands[i].cities[c];
                 break;
@@ -459,3 +459,16 @@ TileGame CWorldMap::getMapTile(int world_coord_x, int world_coord_y){
     TileGame *biome_map=this->getBiomeOutMap(biome_x, biome_y);
     return biome_map[local_y*BIOME_WIDTH+local_x];
 }
+
+bool CWorldMap::isCanMove(int world_coord_x, int world_coord_y){
+
+    EGameTile tile_id=getMapTile(world_coord_x, world_coord_y).tile_type;
+    // get tile description by tile_id
+    if(tile_id>=0 && tile_id<GameTiles.size()){
+        return GameTiles[tile_id].is_can_move;
+    }else{
+        return GameTiles[0].is_can_move;
+    }
+    //return tile.is_can_move;
+}
+

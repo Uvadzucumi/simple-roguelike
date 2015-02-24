@@ -26,6 +26,10 @@ class CCreature{
         Coords2i getWorldPosition(){
             return m_world_position;
         }
+        void Move(int dx, int dy){
+            setWorldPosition(this->m_world_position.x+dx, this->m_world_position.y+dy);
+            printf("Creature move to world position: %d, %d\n",this->m_world_position.x+dx, this->m_world_position.y+dy);
+        }
 };
 
 #endif // CREATURE_H_INCLUDED

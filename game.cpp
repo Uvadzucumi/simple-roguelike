@@ -104,6 +104,7 @@ void CRLGame::CheckEvents(){
                     if(tmp!=EGS_Game){
                         this->SetGameState(tmp);
                     }
+                    this->SceneChanged();
                 }
             default:
                 break;

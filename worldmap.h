@@ -60,6 +60,7 @@ class CWorldMap{
         }
 
         EGameTile getTileId(int x, int y);
+        bool isCanMove(int x, int y);
 
         int getWidth(){ return m_width; }
         int getHeight(){ return m_height; }
@@ -94,6 +95,8 @@ class CWorldMap{
 
         TileGame* getBiomeOutMap(int biome_x, int biome_y);
         TileGame getMapTile(int world_coord_x, int world_coord_y);
+
+
 };
 
 #endif // WORLDMAP_H_INCLUDED
