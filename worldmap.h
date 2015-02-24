@@ -93,6 +93,8 @@ class CWorldMap{
         void AddCityToIsland(int island_id);
         bool checkDistanceToCity(int island_id, int city_pos_x, int city_pos_y);
 
+        void fillBiomeMap(TileGame *biome_map, EGameTile tile_type);
+
         TileGame* getBiomeOutMap(int biome_x, int biome_y);
         TileGame getMapTile(int world_coord_x, int world_coord_y);
 
