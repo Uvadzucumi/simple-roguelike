@@ -130,6 +130,7 @@ enum EGameTile{
     GT_Biome_Hills,          // brown ~
     GT_Biome_Mountain,       // silver ^
 // location tiles
+    GT_Sand,
     GT_Ground,
     GT_Grass,
     GT_Road,

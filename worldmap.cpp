@@ -412,15 +412,26 @@ City CWorldMap::getRandomCity(){
     return founded;
 }
 
-// helper function for create biome
-void CWorldMap::fillBiomeMap(TileGame *biome_map, EGameTile tile_type){
-    for(int y = 0; y < BIOME_HEIGHT; y++){
-        for(int x = 0; x < BIOME_WIDTH; x++){
+// helper function for create biome ///////////////////////////////////////////////
+
+// fill biome using special tile
+void CWorldMap::BiomeMapFill(TileGame *biome_map, EGameTile tile_type){
+    for(int y = 0; y < BIOME_HEIGHT; ++y){
+        for(int x = 0; x < BIOME_WIDTH; ++x){
             int map_index=y*BIOME_WIDTH+x;
             biome_map[map_index].tile_type=tile_type;
             biome_map[map_index].is_viewed=false;
             biome_map[map_index].is_view=false;
         }
+    }
+}
+
+// add special tiles to biome in random points
+void CWorldMap::BiomeMapAdd(TileGame *biome_map, EGameTile tile_type, int item_count){
+    int map_index;
+    for(int i=0; i < item_count; ++i){
+        map_index=(rand()%BIOME_HEIGHT) * BIOME_WIDTH + rand()%BIOME_WIDTH;
+        biome_map[map_index].tile_type=tile_type;
     }
 }
 
@@ -433,36 +444,77 @@ TileGame* CWorldMap::getBiomeOutMap(int biome_x, int biome_y){
 
         m_map[index].biome_map=new TileGame[BIOME_WIDTH*BIOME_HEIGHT];
         srand(m_map[index].biome_seed); // set biome randomize
+        std::cout << "Created map for biome [" << biome_x << "," << biome_y << "] ";
+        int item_count;
         switch(m_map[index].biome){
+            case WMB_Hills:
+                 std::cout << "(Hills)";
+                 BiomeMapFill(m_map[index].biome_map, GT_Ground);
+                 item_count=(BIOME_WIDTH*BIOME_HEIGHT)*0.1; // 10%
+                 BiomeMapAdd(m_map[index].biome_map, GT_Bush, item_count);
+                 std::cout << " Bush = " << item_count;
+                 item_count=(BIOME_WIDTH*BIOME_HEIGHT)*0.2; // 20%
+                 BiomeMapAdd(m_map[index].biome_map, GT_Grass, item_count);
+                 std::cout << " Grass = " << item_count << std::endl;
+                 break;
+            case WMB_Mountain:
+                 BiomeMapFill(m_map[index].biome_map, GT_Biome_Mountain);
+                 std::cout << "(Mountain)" << std::endl;
+                 break;
+            case WMB_Forest:
+                 BiomeMapFill(m_map[index].biome_map, GT_Tree);
+                 std::cout << "(Forest)";
+                 // add grass
+                 //item_count=(BIOME_WIDTH*BIOME_HEIGHT)*((float)(1+rand()%3)/10);
+                 item_count=(BIOME_WIDTH*BIOME_HEIGHT)*0.1; // 10%
+                 BiomeMapAdd(m_map[index].biome_map, GT_Grass, item_count);
+                 std::cout << " Grass = " << item_count;
+                 // add bush
+                 //item_count=(BIOME_WIDTH*BIOME_HEIGHT)*((float)(1+rand()%3)/10);
+                 item_count=(BIOME_WIDTH*BIOME_HEIGHT)*0.1; // 10%
+                 BiomeMapAdd(m_map[index].biome_map, GT_Bush, item_count);
+                 std::cout << " Bush = " << item_count << std::endl;
+                 break;
+            case WMB_Beach:
+                 std::cout << "(Beach)";
+                 BiomeMapFill(m_map[index].biome_map, GT_Sand);
+                 // add bush
+                 item_count=(BIOME_WIDTH*BIOME_HEIGHT)*((float)(1+rand()%3)/400);
+                 BiomeMapAdd(m_map[index].biome_map, GT_Bush, item_count);
+                 std::cout << " Bush = " << item_count;
+                 // add grass
+                 item_count=(BIOME_WIDTH*BIOME_HEIGHT)*((float)(1+rand()%3)/10);
+                 BiomeMapAdd(m_map[index].biome_map, GT_Grass, item_count);
+                 std::cout << " Grass = " << item_count << std::endl;
+                 break;
+            case WMB_ShallowWater:
+                 BiomeMapFill(m_map[index].biome_map, GT_Biome_ShallowWater);
+                 std::cout << "(ShallowWater)";
+                 item_count=(BIOME_WIDTH*BIOME_HEIGHT)*0.1; // 10%
+                 BiomeMapAdd(m_map[index].biome_map, GT_Biome_DeepWater, item_count);
+                 std::cout << " DeepWater = " << item_count << std::endl;
+                 break;
+            case WMB_DeepWater:
+                 BiomeMapFill(m_map[index].biome_map, GT_Biome_DeepWater);
+                 std::cout << "(DeepWater)";
+                 item_count=(BIOME_WIDTH*BIOME_HEIGHT)*0.1; // 10%
+                 BiomeMapAdd(m_map[index].biome_map, GT_Biome_ShallowWater, item_count);
+                 std::cout << " ShallowWater = " << item_count << std::endl;
+                 break;
             case WMB_Plains:
+                std::cout << "(Plains)";
+                BiomeMapFill(m_map[index].biome_map, GT_Grass);
+                // add trees
+                item_count=(BIOME_WIDTH*BIOME_HEIGHT)*((float)(1+rand()%3)/200);
+                BiomeMapAdd(m_map[index].biome_map, GT_Tree, item_count);
+                std::cout << " Trees = " << item_count;
+                // add bushes
+                item_count=(BIOME_WIDTH*BIOME_HEIGHT)*((float)(1+rand()%3)/300);
+                BiomeMapAdd(m_map[index].biome_map, GT_Bush, item_count);
+                std::cout << " Bush = " << item_count << std::endl;
+                break;
             default:
-                // temporary - all biomes - grass
-                fillBiomeMap(m_map[index].biome_map, GT_Grass);
-                /*
-                for(int y = 0; y < BIOME_HEIGHT; y++){
-                    for(int x = 0; x < BIOME_WIDTH; x++){
-                        int map_index=y*BIOME_WIDTH+x;
-                        m_map[index].biome_map[map_index].tile_type=GT_Grass;
-                        m_map[index].biome_map[map_index].is_viewed=false;
-                        m_map[index].biome_map[map_index].is_view=false;
-                    }
-                }
-                */
-                int trees_count=(BIOME_WIDTH*BIOME_HEIGHT)*((float)(1+rand()%3)/200);
-                for(int i=0; i<trees_count; i++){
-                    int map_index=(rand()%BIOME_HEIGHT) * BIOME_WIDTH + rand()%BIOME_WIDTH;
-                    //m_map[index].biome_map[map_index].tile_type=GT_Tree+rand()%2;
-                    m_map[index].biome_map[map_index].tile_type=GT_Tree;
-                }
-
-                int bush_count=(BIOME_WIDTH*BIOME_HEIGHT)*((float)(1+rand()%3)/300);
-                for(int i=0; i<bush_count; i++){
-                    int map_index=(rand()%BIOME_HEIGHT) * BIOME_WIDTH + rand()%BIOME_WIDTH;
-                    //m_map[index].biome_map[map_index].tile_type=GT_Tree+rand()%2;
-                    m_map[index].biome_map[map_index].tile_type=GT_Bush;
-                }
-
-                std::cout << "Created map for biome [" << biome_x << "," << biome_y << "] trees = " << trees_count << " bush: " << bush_count << std::endl;
+                BiomeMapFill(m_map[index].biome_map, GT_None);
             break;
         }
 

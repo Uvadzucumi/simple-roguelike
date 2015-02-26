@@ -69,6 +69,7 @@ std::vector<TileDisplay> GameTiles = {
     {'~',COLOR_ORANGE,true,false}, // GT_Biome_Hills
     {'^',COLOR_WHITE,true,false},  // GT_Biome_Mountain
     // map tiles
+    {'.',COLOR_YELLOW,true,true},   //GT_Sand,
     {'.',COLOR_GREY,true,true},   //GT_Ground,
     {'.',COLOR_GREEN,true,true},  //GT_Grass,
     {'.',COLOR_ORANGE,true,true}, //GT_Road,
